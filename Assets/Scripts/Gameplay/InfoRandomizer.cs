@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class InfoRandomizer
 {
-    // Random Generator
-    private readonly Random _generator = new Random();
-
     // Temporary, will change to read from file
     string[] listOfFirstName = {
         "Nikki", "Bill", "Patrick", "Daniel", "Alex"
@@ -20,7 +18,7 @@ public class InfoRandomizer
 
     public InfoRandomizer() {}
 
-    public Character getRandomizeCharacter()
+    public Character GetRandomizeCharacter()
     {
         Character generated = new Character();
 
@@ -29,12 +27,15 @@ public class InfoRandomizer
         generated.middleName = listOfMiddleName[RandomNumber(0, listOfMiddleName.Length)];
         generated.lastName = listOfLastName[RandomNumber(0, listOfLastName.Length)];
 
-        string dob = "" + RandomNumber(1, 28) + "/" + RandomNumber(1, 12) + "/" + RandomNumber(1986, 2003);
-        generated.dob = DateTime.ParseExact(dob, "dd/MM/yyyy", null);
-
         return generated;
     }
 
-    public int RandomNumber(int min, int max) { return _generator.Next(min, max); }
+    public int RandomNumber(int min, int max) { return Random.Range(min, max); }
+    public DateTime GetRandomDate(DateTime dateTimeFrom, DateTime dateTimeTo)
+    {
+        int range = (dateTimeTo - dateTimeFrom).Days;
+        return dateTimeFrom.AddDays(Random.Range(0, range));
+    }
+
 
 }
