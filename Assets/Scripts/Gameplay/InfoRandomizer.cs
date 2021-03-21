@@ -36,6 +36,4 @@ public class InfoRandomizer
         int range = (dateTimeTo - dateTimeFrom).Days;
         return dateTimeFrom.AddDays(Random.Range(0, range));
     }
-
-
 }
