@@ -26,6 +26,11 @@ public class Sc_Times : MonoBehaviour
         
     }
 
+    public void DateOver()
+    {
+        DateTime dateEnd = date1.AddHours(9);
+    }
+
     public DateTime currentTime()
     {
         
