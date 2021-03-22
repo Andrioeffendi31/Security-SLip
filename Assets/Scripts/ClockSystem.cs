@@ -16,8 +16,8 @@ public class ClockSystem : MonoBehaviour
     private void Start()
     {
         AudioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        AudioManager.PlaySfxClock();
-        StartCoroutine(TickTime());
+        SetStartDateTime(2021, 3, 21, 7, 0, 0);
+        StartClock();
     }
 
     private void Update()
@@ -41,6 +41,15 @@ public class ClockSystem : MonoBehaviour
     {
         waktu = new DateTime(year, month, day, hour, minute, second);
         if (GameConfiguration.DebugMode) Debug.Log("Start DateTime :" + waktu);
+    }
+
+    /// <summary>
+    /// Start the current clock
+    /// </summary>
+    public void StartClock()
+    {
+        AudioManager.PlaySfxClock();
+        StartCoroutine(TickTime());
     }
 
     private IEnumerator TickTime()
