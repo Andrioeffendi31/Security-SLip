@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Sc_AudioBGM_Manager : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
     public AudioClip BGM_Menu;
     public AudioClip BGM_Gameplay;
