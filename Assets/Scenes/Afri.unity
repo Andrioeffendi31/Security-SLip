@@ -747,7 +747,7 @@ MonoBehaviour:
   BGM_Final: {fileID: 8300000, guid: 6d5c182bbf8ade14e9c01fcd0cf62b29, type: 3}
   sfxDoor: {fileID: 8300000, guid: 1fe827c8b7fe1864b9f014b6fb83a09e, type: 3}
   sfxClock: {fileID: 8300000, guid: b49e0482863931c489e699d19b317388, type: 3}
-  sfxAlarm: {fileID: 0}
+  sfxAlarm: {fileID: 8300000, guid: 466d91e8b6952614198df41417f375ab, type: 3}
   audioSource: {fileID: 1316583471}
 --- !u!1 &1648867530
 GameObject:
