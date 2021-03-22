@@ -742,7 +742,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1315dd6952a193a4aa498b69472ffbac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip1: {fileID: 8300000, guid: dfa9daab35e49284790931aab1a1463d, type: 3}
+  BGM_Menu: {fileID: 8300000, guid: dfa9daab35e49284790931aab1a1463d, type: 3}
+  BGM_Gameplay: {fileID: 8300000, guid: e172eb9d267c8c74a913bcee7a17d904, type: 3}
+  BGM_Final: {fileID: 8300000, guid: 6d5c182bbf8ade14e9c01fcd0cf62b29, type: 3}
+  sfxDoor: {fileID: 8300000, guid: 1fe827c8b7fe1864b9f014b6fb83a09e, type: 3}
+  sfxClock: {fileID: 8300000, guid: b49e0482863931c489e699d19b317388, type: 3}
+  sfxAlarm: {fileID: 0}
   audioSource: {fileID: 1316583471}
 --- !u!1 &1648867530
 GameObject:

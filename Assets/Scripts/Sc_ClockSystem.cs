@@ -15,7 +15,7 @@ public class Sc_ClockSystem : MonoBehaviour
                 degreesPerSecond = 6f;
     private float startTime;
     private float stopTime;
-
+    Sc_AudioBGM_Manager AudioManager;
     private float timerTime;
     public Transform hoursTransform, minutesTransform, secondsTransform;
 
@@ -28,12 +28,14 @@ public class Sc_ClockSystem : MonoBehaviour
 
     private void Start()
     {
+        AudioManager = GameObject.Find("AudioManager").GetComponent<Sc_AudioBGM_Manager>();
         speedl = gameObject.GetComponent<Sc_Times>().speed;
         waktu = gameObject.GetComponent<Sc_Times>().currentTime();
         Debug.Log(waktu);
         hoursTransform.eulerAngles = new Vector3(150f, 0f, 0f);
         //InvokeRepeating("repeat",1f,1f);
         StartCoroutine(repeat());
+        AudioManager.PlaySfxClock();
 
     }
 
@@ -41,7 +43,6 @@ public class Sc_ClockSystem : MonoBehaviour
 
     private void Update()
     {
-       
         timerTime = stopTime + (Time.time - startTime);
         float minutesInt = timerTime / 60;
         float secondsInt = timerTime % 60;
