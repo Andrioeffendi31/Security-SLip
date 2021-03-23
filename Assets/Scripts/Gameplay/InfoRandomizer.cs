@@ -18,14 +18,17 @@ public class InfoRandomizer
 
     public InfoRandomizer() {}
 
-    public Character GetRandomizeCharacter()
+    public Character GetRandomizeCharacter(int gender)
     {
-        Character generated = new Character();
+        string firstName;
+        string middleName;
+        string lastName;
 
-        // Generate character full name
-        generated.firstName = listOfFirstName[RandomNumber(0, listOfFirstName.Length)];
-        generated.middleName = listOfMiddleName[RandomNumber(0, listOfMiddleName.Length)];
-        generated.lastName = listOfLastName[RandomNumber(0, listOfLastName.Length)];
+        firstName = listOfFirstName[RandomNumber(0, listOfFirstName.Length)];
+        middleName = listOfMiddleName[RandomNumber(0, listOfMiddleName.Length)];
+        lastName = listOfLastName[RandomNumber(0, listOfLastName.Length)];
+
+        Character generated = new Character(firstName, middleName, lastName, gender);
 
         return generated;
     }
