@@ -18,9 +18,11 @@ public class CameraController : MonoBehaviour
     [Range(1.0f, 10.0f)]
     public float YSensitivity;
     private float rotAroundX, rotAroundY;
+    public bool allowMovement;
 
     private void Start()
     {
+        allowMovement = true;
         cam = GetComponent<Camera>();
         rotAroundX = transform.eulerAngles.x;
         rotAroundY = transform.eulerAngles.y;
@@ -28,14 +30,17 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        rotAroundX += Input.GetAxis("Mouse Y") * XSensitivity;
-        rotAroundY += Input.GetAxis("Mouse X") * YSensitivity;
+        if (allowMovement)
+        {
+            rotAroundX += Input.GetAxis("Mouse Y") * XSensitivity;
+            rotAroundY += Input.GetAxis("Mouse X") * YSensitivity;
 
-        // Clamp rotation
-        rotAroundX = Mathf.Clamp(rotAroundX, XMinRotation, XMaxRotation);
-        rotAroundY = Mathf.Clamp(rotAroundY, YMinRotation, YMaxRotation);
+            // Clamp rotation
+            rotAroundX = Mathf.Clamp(rotAroundX, XMinRotation, XMaxRotation);
+            rotAroundY = Mathf.Clamp(rotAroundY, YMinRotation, YMaxRotation);
 
-        CameraRotation();
+            CameraRotation();
+        }
     }
 
     private void CameraRotation()
