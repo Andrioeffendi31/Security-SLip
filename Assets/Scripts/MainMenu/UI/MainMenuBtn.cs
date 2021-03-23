@@ -5,12 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuBtn : MonoBehaviour
 {
-    public GameManager gameManager;
-
     public void GoToGameplay()
     {
         SceneManager.LoadScene("Gameplay");
-        gameManager.isPlaying = true;
     }
 
     public void GoToSetting()

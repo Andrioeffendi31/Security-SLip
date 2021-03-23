@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClockSystem : MonoBehaviour
 {
@@ -13,10 +14,12 @@ public class ClockSystem : MonoBehaviour
     AudioManager AudioManager;
     public Transform hoursTransform, minutesTransform, secondsTransform;
 
+    public Text computerUI_date;
+    public Text computerUI_clock;
+
     private void Start()
     {
         AudioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        SetStartDateTime(2021, 3, 21, 7, 0, 0);
         StartClock();
     }
 
@@ -43,6 +46,11 @@ public class ClockSystem : MonoBehaviour
         if (GameConfiguration.DebugMode) Debug.Log("Start DateTime :" + waktu);
     }
 
+    public DateTime GetCurrentDateTime()
+    {
+        return waktu;
+    }
+
     /// <summary>
     /// Start the current clock
     /// </summary>
@@ -55,6 +63,8 @@ public class ClockSystem : MonoBehaviour
     private IEnumerator TickTime()
     {
         waktu = waktu.AddSeconds(GameConfiguration.secondPerRealSecond);
+        computerUI_clock.text = waktu.ToString("HH:mm");
+        computerUI_date.text = waktu.ToString("dddd, MMMM dd");
         if (GameConfiguration.DebugMode) Debug.Log((int)(waktu.Hour) + ":" + (int)(waktu.Minute) + ":" + (int)(waktu.Second));
         yield return new WaitForSeconds(1);
         StartCoroutine(TickTime());

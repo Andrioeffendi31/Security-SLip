@@ -43,11 +43,17 @@ public class RaycastController : MonoBehaviour
                 _selection = selection;
             }
         }
-        
     }
 
-    public RaycastHit GetObjectOnRaycast()
+    public string GetObjectOnRaycastName()
     {
-        return hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            return hit.transform.name;
+        } else
+        {
+            return null;
+        }
+            
     }
 }

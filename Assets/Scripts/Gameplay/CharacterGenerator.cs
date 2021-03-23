@@ -14,11 +14,15 @@ public class CharacterGenerator : MonoBehaviour
 
     public GameObject[] generatedCharacter;
 
+    private void Start()
+    {
+        RandomCharacter();
+    }
+
     public void RandomCharacter()
     {
         rand = Random.Range(0, 2);
 
-        Debug.Log(rand);
         if (rand == 1)
         {
             gender = "Male";
@@ -62,11 +66,13 @@ public class CharacterGenerator : MonoBehaviour
             Instantiate(generatedCharacter[skin + 4], transform.position, transform.rotation);
         }
 
-        
-        Debug.Log("Gender : " + gender);
-        Debug.Log("Skin : " + skin);
-        Debug.Log("Rambut : " + rambut);
-        Debug.Log("Baju : " + modelBaju);
+        if (GameConfiguration.DebugMode)
+        {
+            Debug.Log("Gender : " + gender);
+            Debug.Log("Skin : " + skin);
+            Debug.Log("Rambut : " + rambut);
+            Debug.Log("Baju : " + modelBaju);
+        }
     }
 
     private void RandomVariasiMale()
