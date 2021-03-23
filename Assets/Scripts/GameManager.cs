@@ -6,6 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public bool isPlaying;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
+
     private void Start()
     {
         

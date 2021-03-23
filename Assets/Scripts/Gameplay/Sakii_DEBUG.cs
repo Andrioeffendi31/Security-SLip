@@ -9,12 +9,12 @@ public class Sakii_DEBUG : MonoBehaviour
 
     private void Start()
     {
-        Character test = infoRandomizer.getRandomizeCharacter();
+        Character test = infoRandomizer.GetRandomizeCharacter();
 
         Debug.Log(test.firstName);
         Debug.Log(test.middleName);
         Debug.Log(test.lastName);
 
-        Debug.Log(test.getDOB());
+       
     }
 }
