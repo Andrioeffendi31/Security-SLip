@@ -11,48 +11,44 @@ public class AudioManager : MonoBehaviour
     public AudioClip sfxDoor;
     public AudioClip sfxClock;
     public AudioClip sfxAlarm;
-    public AudioSource audioSource;
-
-    private void Start()
-    {
-        audioSource = this.GetComponent<AudioSource>();
-    }
-
+    public AudioSource audioSourceBGM;
+    public AudioSource audioSourceSFX;
 
     public void PlayBgmMenu()
     {
-        audioSource.clip = BGM_Menu;
-        audioSource.Play();
+        audioSourceBGM.clip = BGM_Menu;
+        audioSourceBGM.Play();
     }
 
     public void PlayBgmGamePlay()
     {
-        audioSource.clip = BGM_Gameplay;
-        audioSource.Play();
+        audioSourceBGM.clip = BGM_Gameplay;
+        audioSourceBGM.Play();
     }
 
     public void PlayBgmFinal()
     {
-        audioSource.clip = BGM_Final;
-        audioSource.Play();
+        audioSourceBGM.clip = BGM_Final;
+        audioSourceBGM.Play();
     }
 
     public void PlaySfxClock()
     {
-        audioSource.loop = true;
-        audioSource.clip = sfxClock;
-        audioSource.Play();
+        audioSourceSFX.loop = true;
+        audioSourceSFX.clip = sfxClock;
+        audioSourceSFX.Play();
+        PlayBgmGamePlay();
     }
 
     public void PlaySfxDoor()
     {
-        audioSource.clip = sfxDoor;
-        audioSource.Play();
+        audioSourceBGM.clip = sfxDoor;
+        audioSourceBGM.Play();
     }
     public void PlaySfxAlarm()
     {
-        audioSource.clip = sfxAlarm;
-        audioSource.Play();
+        audioSourceBGM.clip = sfxAlarm;
+        audioSourceBGM.Play();
     }
 
 }
