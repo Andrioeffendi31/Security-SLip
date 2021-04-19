@@ -18,11 +18,6 @@ public class ClockSystem : MonoBehaviour
 
     public Text computerUI_date, computerUI_clock;
 
-    private void Start()
-    {
-        
-    }
-
     private void Update()
     {
         RotateNeedle();
@@ -33,9 +28,9 @@ public class ClockSystem : MonoBehaviour
     /// </summary>
     private void RotateNeedle()
     {
-        hoursTransform.localRotation = Quaternion.Euler(180 + time.Hour * degreesPerHour, 0, 0);
-        minutesTransform.localRotation = Quaternion.Euler(180 + time.Minute * degreesPerMinute, 0, 0);
-        secondsTransform.localRotation = Quaternion.Euler(180 + time.Second * degreesPerSecond, 0, 0);
+        hoursTransform.localRotation = Quaternion.Euler(180 + (time.Hour * degreesPerHour), 0, 0);
+        minutesTransform.localRotation = Quaternion.Euler(180 + (time.Minute * degreesPerMinute), 0, 0);
+        secondsTransform.localRotation = Quaternion.Euler(180 + (time.Second * degreesPerSecond), 0, 0);
     }
 
     private IEnumerator TickTime()
