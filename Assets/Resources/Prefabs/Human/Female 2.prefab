@@ -1398,7 +1398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08cbeac6f7cd7414585340bf499f00f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
+  gameplayController: {fileID: 0}
   gender: 1
 --- !u!54 &871988643262218078
 Rigidbody:

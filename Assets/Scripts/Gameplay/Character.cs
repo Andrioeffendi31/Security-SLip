@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Character
 {
+    private readonly InfoRandomizer infoRandomizer = new InfoRandomizer();
+
     // Character info
     public string firstName { get; set; }
     public string middleName { get; set; }
@@ -12,13 +14,11 @@ public class Character
 
     public Info info;
 
-    public Character() { }
-
-    public Character(string firstName, string middleName, string lastName, int gender)
+    public Character(int gender)
     {
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
+        this.firstName = infoRandomizer.GetRandomizeFirstName();
+        this.middleName = infoRandomizer.GetRandomizeMiddleName();
+        this.lastName = infoRandomizer.GetRandomizeLastName();
         this.gender = gender;
 
         info = new Info();

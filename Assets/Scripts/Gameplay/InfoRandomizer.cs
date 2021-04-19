@@ -7,30 +7,37 @@ public class InfoRandomizer
 {
     // Temporary, will change to read from file
     string[] listOfFirstName = {
-        "Nikki", "Bill", "Patrick", "Daniel", "Alex"
+        "Nikki", "Bill", "Patrick", "Daniel", "Alex", "Michael"
     };
+
     string[] listOfMiddleName = {
-        "Hines", "Huff", "Matt", "Ence"
+        "Hines", "Huff", "Matt", "Ence", "Rio"
     };
+    
     string[] listOfLastName = {
-        "Benson", "Sears", "Coffey", "Everett", "Grant"
+        "Benson", "Sears", "Coffey", "Everett", "Grant", "Fernando"
     };
 
     public InfoRandomizer() {}
 
-    public Character GetRandomizeCharacter(int gender)
+    public string GetRandomizeFirstName()
     {
-        string firstName;
-        string middleName;
-        string lastName;
+        return listOfFirstName[RandomNumber(0, listOfFirstName.Length)];
+    }
 
-        firstName = listOfFirstName[RandomNumber(0, listOfFirstName.Length)];
-        middleName = listOfMiddleName[RandomNumber(0, listOfMiddleName.Length)];
-        lastName = listOfLastName[RandomNumber(0, listOfLastName.Length)];
+    public string GetRandomizeMiddleName()
+    {
+        return listOfMiddleName[RandomNumber(0, listOfMiddleName.Length)];
+    }
 
-        Character generated = new Character(firstName, middleName, lastName, gender);
-
-        return generated;
+    public string GetRandomizeLastName()
+    {
+        return listOfLastName[RandomNumber(0, listOfLastName.Length)];
+    }
+    
+    public int GetRandomizeGender()
+    {
+        return RandomNumber(0, 2);
     }
 
     public int RandomNumber(int min, int max) { return Random.Range(min, max); }

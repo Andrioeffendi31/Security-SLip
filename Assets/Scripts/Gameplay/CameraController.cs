@@ -4,31 +4,43 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Camera cam;
-
     private float XMinRotation = -45f;
     private float XMaxRotation = 45f;
     private float YMinRotation = -75f;
     private float YMaxRotation = 90f;
 
-    public GameObject chair;
+    [SerializeField]
+    private Camera cam;
 
+    [SerializeField]
     [Range(1.0f, 10.0f)]
     public float XSensitivity;
+
+    [SerializeField]
     [Range(1.0f, 10.0f)]
-    public float YSensitivity;
+    private float YSensitivity;
+
     private float rotAroundX, rotAroundY;
-    public bool allowMovement;
+    private bool allowMovement;
 
     private void Start()
     {
-        allowMovement = true;
-        cam = GetComponent<Camera>();
+        EnableCameraMovement();
+        GetStartRotation();
+    }
+
+    private void Update()
+    {
+        CameraMovement();
+    }
+
+    private void GetStartRotation()
+    {
         rotAroundX = transform.eulerAngles.x;
         rotAroundY = transform.eulerAngles.y;
     }
 
-    private void Update()
+    private void CameraMovement()
     {
         if (allowMovement)
         {
@@ -39,13 +51,19 @@ public class CameraController : MonoBehaviour
             rotAroundX = Mathf.Clamp(rotAroundX, XMinRotation, XMaxRotation);
             rotAroundY = Mathf.Clamp(rotAroundY, YMinRotation, YMaxRotation);
 
-            CameraRotation();
-        }
+            cam.transform.rotation = Quaternion.Euler(-rotAroundX, rotAroundY, 0);
+        } 
     }
 
-    private void CameraRotation()
+    public void EnableCameraMovement()
     {
-        chair.transform.parent.rotation = Quaternion.Euler(0, rotAroundY, 0);
-        cam.transform.rotation = Quaternion.Euler(-rotAroundX, rotAroundY, 0);
+        Cursor.visible = false;
+        allowMovement = true;
+    }
+
+    public void DisableCameraMovement()
+    {
+        Cursor.visible = true;
+        allowMovement = false;
     }
 }

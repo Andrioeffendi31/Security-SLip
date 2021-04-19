@@ -4,71 +4,95 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    [SerializeField] private GameManager gameManager;
-    [SerializeField] private CameraController cameraController;
-    [SerializeField] private RaycastController raycast;
-    [SerializeField] private GameObject computerUI;
-    [SerializeField] private GameObject maleCard;
-    [SerializeField] private GameObject femaleCard;
+    [SerializeField]
+    private GameplayController gameplayController;
+
+    [SerializeField]
+    private CameraController cameraController;
+
+    [SerializeField]
+    private RaycastController raycast;
+
+    [SerializeField]
+    private GameObject computerUI;
+
+    [SerializeField]
+    private CardController cardController;
 
     void Update()
+    {
+        CheckForInput();
+    }
+
+    private void CheckForInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
             string name = raycast.GetObjectOnRaycastName();
 
-            if (name != null)
-                switch (name)
-                {
-                    case "Approve":
-                        if (gameManager.allowToChoose)
-                        {
-                            gameManager.allowToChoose = false;
-                            gameManager.CheckInfo(true);
-                        }
-                        break;
+            switch (name)
+            {
+                case "Approve":
+                    Approve();
+                    break;
 
-                    case "Reject":
-                        if (gameManager.allowToChoose)
-                        {
-                            gameManager.allowToChoose = false;
-                            gameManager.CheckInfo(false);
-                        }
-                        break;
+                case "Reject":
+                    Reject();
+                    break;
 
-                    case "Computer":
-                        Cursor.visible = true;
-                        cameraController.allowMovement = false;
-                        computerUI.SetActive(true);
-                        break;
+                case "Computer":
+                    OpenComputerGUI();
+                    break;
 
-                    case "Entry Card":
-                        if (gameManager.allowToChoose)
-                        {
-                            Cursor.visible = true;
-                            cameraController.allowMovement = false;
-                            if (gameManager.character.gender == 0)
-                                maleCard.SetActive(true);
-                            if (gameManager.character.gender == 1)
-                                femaleCard.SetActive(true);
-                        }
-                        break;
-                }
+                case "Entry Card":
+                    OpenCardUI();
+                    break;
+            }
         }
+    }
+
+    private void Approve()
+    {
+        if (gameplayController.allowToChoose)
+        {
+            gameplayController.allowToChoose = false;
+            gameplayController.CheckInfo(true);
+        }
+    }
+
+    private void Reject()
+    {
+        if (gameplayController.allowToChoose)
+        {
+            gameplayController.allowToChoose = false;
+            gameplayController.CheckInfo(false);
+        }
+    }
+
+    private void OpenComputerGUI()
+    {
+        cameraController.DisableCameraMovement();
+        computerUI.SetActive(true);
     }
 
     public void CloseComputerUI()
     {
-        Cursor.visible = false;
-        cameraController.allowMovement = true;
+        cameraController.EnableCameraMovement();
         computerUI.SetActive(false);
+    }
+
+    private void OpenCardUI()
+    {
+        if (gameplayController.allowToChoose)
+        {
+            cameraController.DisableCameraMovement();
+            cardController.Show();
+        }
     }
 
     public void CloseCardUI()
     {
-        Cursor.visible = false;
-        cameraController.allowMovement = true;
-        maleCard.SetActive(false);
-        femaleCard.SetActive(false);
+        cameraController.EnableCameraMovement();
+        cardController.Hide();
     }
 }

@@ -10,25 +10,47 @@ public class ClockSystem : MonoBehaviour
                 degreesPerMinute = 6f,
                 degreesPerSecond = 6f;
 
-    private DateTime waktu;
-    AudioManager AudioManager;
+    private DateTime time;
+
+    private AudioManager AudioManager;
+
     public Transform hoursTransform, minutesTransform, secondsTransform;
 
-    public Text computerUI_date;
-    public Text computerUI_clock;
+    public Text computerUI_date, computerUI_clock;
 
     private void Start()
     {
-        AudioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        StartClock();
+        
     }
 
     private void Update()
     {
-        // Update clock needles
-        hoursTransform.localRotation = Quaternion.Euler(180 + waktu.Hour * degreesPerHour, 0, 0);
-        minutesTransform.localRotation = Quaternion.Euler(180 + waktu.Minute * degreesPerMinute, 0, 0);
-        secondsTransform.localRotation = Quaternion.Euler(180 + waktu.Second * degreesPerSecond, 0, 0);
+        RotateNeedle();
+    }
+
+    /// <summary>
+    /// Update clock model needle
+    /// </summary>
+    private void RotateNeedle()
+    {
+        hoursTransform.localRotation = Quaternion.Euler(180 + time.Hour * degreesPerHour, 0, 0);
+        minutesTransform.localRotation = Quaternion.Euler(180 + time.Minute * degreesPerMinute, 0, 0);
+        secondsTransform.localRotation = Quaternion.Euler(180 + time.Second * degreesPerSecond, 0, 0);
+    }
+
+    private IEnumerator TickTime()
+    {
+        time = time.AddSeconds(GameConfiguration.secondPerRealSecond);
+        computerUI_clock.text = time.ToString("HH:mm");
+        computerUI_date.text = time.ToString("dddd, MMMM dd");
+
+        if (GameConfiguration.DebugMode)
+        {
+            Debug.Log((int)(time.Hour) + ":" + (int)(time.Minute) + ":" + (int)(time.Second));
+        }
+
+        yield return new WaitForSeconds(1);
+        StartCoroutine(TickTime());
     }
 
     /// <summary>
@@ -42,13 +64,17 @@ public class ClockSystem : MonoBehaviour
     /// <param name="second"></param>
     public void SetStartDateTime(int year, int month, int day, int hour, int minute, int second)
     {
-        waktu = new DateTime(year, month, day, hour, minute, second);
-        if (GameConfiguration.DebugMode) Debug.Log("Start DateTime :" + waktu);
+        time = new DateTime(year, month, day, hour, minute, second);
+        if (GameConfiguration.DebugMode) Debug.Log("Start DateTime :" + time);
     }
 
+    /// <summary>
+    /// Get the current date and time
+    /// </summary>
+    /// <returns></returns>
     public DateTime GetCurrentDateTime()
     {
-        return waktu;
+        return time;
     }
 
     /// <summary>
@@ -56,18 +82,8 @@ public class ClockSystem : MonoBehaviour
     /// </summary>
     public void StartClock()
     {
+        AudioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
         AudioManager.PlaySfxClock();
         StartCoroutine(TickTime());
-    }
-
-    private IEnumerator TickTime()
-    {
-        waktu = waktu.AddSeconds(GameConfiguration.secondPerRealSecond);
-        computerUI_clock.text = waktu.ToString("HH:mm");
-        computerUI_date.text = waktu.ToString("dddd, MMMM dd");
-        if (GameConfiguration.DebugMode) Debug.Log((int)(waktu.Hour) + ":" + (int)(waktu.Minute) + ":" + (int)(waktu.Second));
-        yield return new WaitForSeconds(1);
-        StartCoroutine(TickTime());
-
     }
 }
