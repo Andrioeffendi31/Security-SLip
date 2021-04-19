@@ -5,14 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioClip BGM_Menu;
-    public AudioClip BGM_Gameplay;
-    public AudioClip BGM_Final;
-    public AudioClip sfxDoor;
-    public AudioClip sfxClock;
-    public AudioClip sfxAlarm;
-    public AudioSource audioSourceBGM;
-    public AudioSource audioSourceSFX;
+    public AudioClip BGM_Menu,
+                     BGM_Gameplay,
+                     BGM_Final,
+                     sfxDoor,
+                     sfxClock,
+                     sfxAlarm;
+
+    public AudioSource audioSourceBGM,
+                       audioSourceSFX;
+
+    private void Start()
+    {
+        DontDestroyOnLoad(this);
+    }
 
     public void PlayBgmMenu()
     {
@@ -37,7 +43,6 @@ public class AudioManager : MonoBehaviour
         audioSourceSFX.loop = true;
         audioSourceSFX.clip = sfxClock;
         audioSourceSFX.Play();
-        PlayBgmGamePlay();
     }
 
     public void PlaySfxDoor()
