@@ -5,8 +5,5 @@ using UnityEngine;
 
 public class Sakii_DEBUG : MonoBehaviour
 {
-    private void Start()
-    {
-        
-    }
+    private void Start() {}
 }

@@ -55,5 +55,4 @@ public class AudioManager : MonoBehaviour
         audioSourceBGM.clip = sfxAlarm;
         audioSourceBGM.Play();
     }
-
 }
