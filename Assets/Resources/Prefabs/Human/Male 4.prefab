@@ -1110,8 +1110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08cbeac6f7cd7414585340bf499f00f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameplayController: {fileID: 0}
-  gender: 0
+  characterAnim: {fileID: -401855855025588575}
+  rb: {fileID: -1064587272070301642}
 --- !u!54 &-1064587272070301642
 Rigidbody:
   m_ObjectHideFlags: 0

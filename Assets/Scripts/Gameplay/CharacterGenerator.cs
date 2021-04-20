@@ -4,26 +4,71 @@ using UnityEngine;
 
 public class CharacterGenerator : MonoBehaviour
 {
+    private readonly InfoRandomizer infoRandomizer = new InfoRandomizer();
+    
+    [SerializeField]
+    private GameplayController gameplayController;
+
+    [SerializeField]
+    private CardController cardController;
+
+    [SerializeField]
+    private DoorController doorController;
+
+    [SerializeField]
+    private GameObject[] characterPrefabs;
+
+    private GameObject character;
+
     private string gender;
+    
     private int skin;
+
     private int rambut;
+
     private int modelBaju;
+
     private int modelCelana;
 
     private int rand;
 
-    public GameObject[] generatedCharacter;
+    // Basic character info
+    private Character characterInfo;
 
-    private void Start()
+    private string firstName, middleName, lastName;
+
+    private int genderType;
+
+    private Info info;
+
+    public void Create()
     {
-        RandomCharacter();
+        firstName = infoRandomizer.GetRandomizeFirstName();
+        middleName = infoRandomizer.GetRandomizeMiddleName();
+        lastName = infoRandomizer.GetRandomizeLastName();
+        genderType = infoRandomizer.GetRandomizeGender();
+        info = new Info();
+        
+        characterInfo = new Character(firstName, middleName, lastName, genderType, info);
+
+        character = InstantiateCharacter();
+        SetupCharacter(character, characterInfo);
+
+        if (GameConfiguration.DebugMode)
+        {
+            Debug.Log("GenderType : " + genderType);
+            Debug.Log("Gender : " + gender);
+            Debug.Log("Skin : " + skin);
+            Debug.Log("Rambut : " + rambut);
+            Debug.Log("Baju : " + modelBaju);
+        }
     }
 
-    public void RandomCharacter()
+    private GameObject InstantiateCharacter()
     {
-        rand = Random.Range(0, 2);
+        GameObject spawnedCharacter;
 
-        if (rand == 1)
+        if (genderType == 0)
         {
             gender = "Male";
             RandomVariasiMale();
@@ -31,20 +76,22 @@ public class CharacterGenerator : MonoBehaviour
             RandomCelana();
             RandomBaju();
 
-            for (int i = 0; i < generatedCharacter[skin].transform.childCount; i++)
+            for (int i = 0; i < characterPrefabs[skin].transform.childCount; i++)
             {
-                var child = generatedCharacter[skin].transform.GetChild(i).gameObject;
+                var child = characterPrefabs[skin].transform.GetChild(i).gameObject;
                 if (child != null)
                     child.SetActive(false);
             }
 
-            generatedCharacter[skin].transform.GetChild(4).gameObject.SetActive(true);
-            generatedCharacter[skin].transform.GetChild(rambut).gameObject.SetActive(true);
-            generatedCharacter[skin].transform.GetChild(modelCelana + 5).gameObject.SetActive(true);
-            generatedCharacter[skin].transform.GetChild(0 + 7).gameObject.SetActive(true);
-            Instantiate(generatedCharacter[skin], transform.position, transform.rotation);
+            characterPrefabs[skin].transform.GetChild(4).gameObject.SetActive(true);
+            characterPrefabs[skin].transform.GetChild(rambut).gameObject.SetActive(true);
+            characterPrefabs[skin].transform.GetChild(modelCelana + 5).gameObject.SetActive(true);
+            characterPrefabs[skin].transform.GetChild(0 + 7).gameObject.SetActive(true);
+
+            spawnedCharacter = Instantiate(characterPrefabs[skin], transform.position, transform.rotation);
+            return spawnedCharacter;
         }
-        else if(rand == 0)
+        else if(genderType == 1)
         {
             gender = "Female";
             RandomVariasiFemale();
@@ -52,27 +99,36 @@ public class CharacterGenerator : MonoBehaviour
             RandomCelana();
             RandomBaju();
 
-            for (int i = 0; i < generatedCharacter[skin + 4].transform.childCount; i++)
+            for (int i = 0; i < characterPrefabs[skin + 4].transform.childCount; i++)
             {
-                var child = generatedCharacter[skin + 4].transform.GetChild(i).gameObject;
+                var child = characterPrefabs[skin + 4].transform.GetChild(i).gameObject;
                 if (child != null)
                     child.SetActive(false);
             }
 
-            generatedCharacter[skin + 4].transform.GetChild(0).gameObject.SetActive(true);
-            generatedCharacter[skin + 4].transform.GetChild(rambut + 1).gameObject.SetActive(true);
-            generatedCharacter[skin + 4].transform.GetChild(modelCelana + 4).gameObject.SetActive(true);
-            generatedCharacter[skin + 4].transform.GetChild(modelBaju + 6).gameObject.SetActive(true);
-            Instantiate(generatedCharacter[skin + 4], transform.position, transform.rotation);
+            characterPrefabs[skin + 4].transform.GetChild(0).gameObject.SetActive(true);
+            characterPrefabs[skin + 4].transform.GetChild(rambut + 1).gameObject.SetActive(true);
+            characterPrefabs[skin + 4].transform.GetChild(modelCelana + 4).gameObject.SetActive(true);
+            characterPrefabs[skin + 4].transform.GetChild(modelBaju + 6).gameObject.SetActive(true);
+
+            spawnedCharacter = Instantiate(characterPrefabs[skin + 4], transform.position, transform.rotation);
+            return spawnedCharacter;
         }
 
-        if (GameConfiguration.DebugMode)
-        {
-            Debug.Log("Gender : " + gender);
-            Debug.Log("Skin : " + skin);
-            Debug.Log("Rambut : " + rambut);
-            Debug.Log("Baju : " + modelBaju);
-        }
+        return null;
+    }
+
+    private void SetupCharacter(GameObject character, Character characterInfo)
+    {
+        CharacterLogic characterLogic = character.GetComponent<CharacterLogic>();
+        characterLogic.Attach(gameplayController, cardController, doorController);
+        characterLogic.ApplyInfo(characterInfo);
+
+        // Start character
+        characterLogic.Init();
+
+        // Send Object to Gameplay Controller
+        gameplayController.SetInfo(character);
     }
 
     private void RandomVariasiMale()

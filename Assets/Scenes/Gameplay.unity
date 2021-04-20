@@ -382,6 +382,8 @@ GameObject:
   - component: {fileID: 51703540}
   - component: {fileID: 51703539}
   - component: {fileID: 51703541}
+  - component: {fileID: 51703544}
+  - component: {fileID: 51703543}
   - component: {fileID: 51703542}
   m_Layer: 0
   m_Name: Gameplay Controller
@@ -402,10 +404,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59442a93da8291b4a8176017cc482d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardController: {fileID: 1716978558}
+  cardController: {fileID: 51703544}
   scoreProgressBar: {fileID: 664934380}
   clockSystem: {fileID: 51703542}
-  characterLogic: {fileID: 0}
   characterGenerator: {fileID: 1047075099}
 --- !u!4 &51703540
 Transform:
@@ -437,7 +438,7 @@ MonoBehaviour:
   cameraController: {fileID: 1993338350}
   raycast: {fileID: 1993338351}
   computerUI: {fileID: 702387131}
-  cardController: {fileID: 1716978558}
+  cardController: {fileID: 51703544}
 --- !u!114 &51703542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,6 +456,40 @@ MonoBehaviour:
   secondsTransform: {fileID: 1963563548}
   computerUI_date: {fileID: 973883476}
   computerUI_clock: {fileID: 1957127302}
+--- !u!114 &51703543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51703538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c53ba72f1f79044940418b9359f7a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entrySlidingDoorAnim: {fileID: 6147441963105143923}
+  exitSlidingDoorAnim: {fileID: 379112892}
+--- !u!114 &51703544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51703538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6852cc7d1e631469451f74494cd0c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardUI: {fileID: 1716978556}
+  entryCard: {fileID: 1668313390}
+  maleBG: {fileID: 1000430828}
+  femaleBG: {fileID: 1141937858}
+  fullName: {fileID: 1387341841}
+  labelGender: {fileID: 1810677439}
+  gender: {fileID: 1412114778}
+  expiredDate: {fileID: 1391399023}
 --- !u!1001 &64518893
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2417,6 +2452,11 @@ PrefabInstance:
 --- !u!4 &379112891 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6465775900836329795, guid: 4ccf129cfc93df844b5b01457d3b9f24, type: 3}
+  m_PrefabInstance: {fileID: 379112890}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &379112892 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5976518873695986686, guid: 4ccf129cfc93df844b5b01457d3b9f24, type: 3}
   m_PrefabInstance: {fileID: 379112890}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &381218164
@@ -6168,7 +6208,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d482aabe278c7b744b10fb79a1b2531b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generatedCharacter:
+  gameplayController: {fileID: 51703539}
+  cardController: {fileID: 0}
+  doorController: {fileID: 51703543}
+  characterPrefabs:
   - {fileID: 6725838123326512154, guid: fa16fa03cce8d904baf107835364b15c, type: 3}
   - {fileID: 846263512917680014, guid: 9af653a4beaa4a14a81805a2e4bb2b13, type: 3}
   - {fileID: 4764274701449846548, guid: 367fed1300f6b5349814f72039714dfa, type: 3}
@@ -11002,7 +11045,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1716978557}
-  - component: {fileID: 1716978558}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -11037,25 +11079,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1716978558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1716978556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c6852cc7d1e631469451f74494cd0c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entryCard: {fileID: 1668313390}
-  maleBG: {fileID: 1000430828}
-  femaleBG: {fileID: 1141937858}
-  fullName: {fileID: 1387341841}
-  labelGender: {fileID: 1810677439}
-  gender: {fileID: 1412114778}
-  expiredDate: {fileID: 1391399023}
 --- !u!1001 &1726847887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13437,3 +13460,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ccf129cfc93df844b5b01457d3b9f24, type: 3}
+--- !u!95 &6147441963105143923 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5976518873695986686, guid: 4ccf129cfc93df844b5b01457d3b9f24, type: 3}
+  m_PrefabInstance: {fileID: 6147441963105143922}
+  m_PrefabAsset: {fileID: 0}
