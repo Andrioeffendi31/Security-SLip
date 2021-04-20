@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameplayController : MonoBehaviour
 {
+    private readonly InfoRandomizer infoRandomizer = new InfoRandomizer();
+
     [SerializeField]
     private CardController cardController;
 
@@ -20,11 +22,13 @@ public class GameplayController : MonoBehaviour
     [SerializeField]
     private CharacterGenerator characterGenerator;
 
+    private GameObject character;
+
+    private CharacterLogic characterLogic;
+
+    private Character characterInfo;
+
     private GameManager gameManager;
-
-    public Character character;
-
-    public CharacterLogic characterLogic;
 
     public bool allowToChoose { get; set; }
 
@@ -56,6 +60,9 @@ public class GameplayController : MonoBehaviour
         clockSystem.SetStartDateTime(2021, 3, 23, 7, 0, 0);
         clockSystem.StartClock();
 
+        // Spawn the first character
+        SpawnCharacter();
+
         // Debug start game time
         if (GameConfiguration.DebugMode)
             Debug.Log("Start DateTime: " + clockSystem.GetCurrentDateTime());
@@ -64,6 +71,11 @@ public class GameplayController : MonoBehaviour
     private void UpdateProgressBar()
     {
         scoreProgressBar.fillAmount = (float) score / 10;
+    }
+
+    public void SpawnCharacter()
+    {
+        characterGenerator.Create();
     }
 
     public void AddScore()
@@ -78,28 +90,35 @@ public class GameplayController : MonoBehaviour
         UpdateProgressBar();
     }
 
-    public void ApplyInfo()
+    public void SetInfo(GameObject character)
     {
+        this.character = character;
+        characterLogic = character.GetComponent<CharacterLogic>();
+        characterInfo = characterLogic.characterInfo;
+
         // Male = 0, Female = 1
-        if (character.gender == 0)
+        if (characterInfo.gender == 0)
         {
             cardController.SetGender(0);
-            cardController.SetFullName(character.GetFullName());
-            cardController.SetExpiredDate(character.info.expired.ToString("dd/MM/yyyy"));
+            cardController.SetFullName(characterInfo.GetFullName());
+            cardController.SetExpiredDate(characterInfo.info.expired.ToString("dd/MM/yyyy"));
         } else
-        if (character.gender == 1)
+        if (characterInfo.gender == 1)
         {
             cardController.SetGender(1);
-            cardController.SetFullName(character.GetFullName());
-            cardController.SetExpiredDate(character.info.expired.ToString("dd/MM/yyyy"));
+            cardController.SetFullName(characterInfo.GetFullName());
+            cardController.SetExpiredDate(characterInfo.info.expired.ToString("dd/MM/yyyy"));
         }
+    }
 
+    public void GiveCard()
+    {
         cardController.PutUserCardInDesk();
     }
 
     public void CheckInfo(bool userDecision)
     {
-        bool status = ApprovalSystem.isExpired(clockSystem.GetCurrentDateTime(), character.GetInfoExpiredDateTime());
+        bool status = ApprovalSystem.isExpired(clockSystem.GetCurrentDateTime(), characterInfo.GetInfoExpiredDateTime());
 
         switch (userDecision)
         {

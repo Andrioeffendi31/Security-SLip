@@ -9,6 +9,9 @@ public class CardController : MonoBehaviour
     private readonly Color TEXT_FEMALE_COLOR = new Color32(215, 68, 89, 255);
 
     [SerializeField]
+    private GameObject cardUI;
+
+    [SerializeField]
     private GameObject entryCard;
 
     [SerializeField]
@@ -41,12 +44,12 @@ public class CardController : MonoBehaviour
 
     public void Show()
     {
-        gameObject.SetActive(true);
+        cardUI.SetActive(true);
     }
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        cardUI.SetActive(false);
     }
 
     public void SetGender(int gender)
