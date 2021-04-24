@@ -43,8 +43,8 @@ public class Character
         return fullName;
     }
 
-    public DateTime GetInfoExpiredDateTime()
+    public DateTime GetCardExpiredDateTime()
     {
-        return info.expired;
+        return info.card.dateExpired;
     }
 }

@@ -51,15 +51,10 @@ public class ClockSystem : MonoBehaviour
     /// <summary>
     /// Set gameplay start date and time
     /// </summary>
-    /// <param name="year"></param>
-    /// <param name="month"></param>
-    /// <param name="day"></param>
-    /// <param name="hour"></param>
-    /// <param name="minute"></param>
-    /// <param name="second"></param>
-    public void SetStartDateTime(int year, int month, int day, int hour, int minute, int second)
+    /// <param name="dateTime"></param>
+    public void SetStartDateTime(DateTime dateTime)
     {
-        time = new DateTime(year, month, day, hour, minute, second);
+        time = dateTime;
         if (GameConfiguration.DebugMode) Debug.Log("Start DateTime :" + time);
     }
 

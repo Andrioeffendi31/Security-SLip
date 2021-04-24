@@ -57,7 +57,7 @@ public class GameplayController : MonoBehaviour
         allowToChoose = false;
         
         // Set Game Time and start the clock
-        clockSystem.SetStartDateTime(2021, 3, 23, 7, 0, 0);
+        clockSystem.SetStartDateTime(GameConfiguration.gameTime);
         clockSystem.StartClock();
 
         // Spawn the first character
@@ -101,13 +101,13 @@ public class GameplayController : MonoBehaviour
         {
             cardController.SetGender(0);
             cardController.SetFullName(characterInfo.GetFullName());
-            cardController.SetExpiredDate(characterInfo.info.expired.ToString("dd/MM/yyyy"));
+            cardController.SetExpiredDate(characterInfo.GetCardExpiredDateTime().ToString("dd/MM/yyyy"));
         } else
         if (characterInfo.gender == 1)
         {
             cardController.SetGender(1);
             cardController.SetFullName(characterInfo.GetFullName());
-            cardController.SetExpiredDate(characterInfo.info.expired.ToString("dd/MM/yyyy"));
+            cardController.SetExpiredDate(characterInfo.GetCardExpiredDateTime().ToString("dd/MM/yyyy"));
         }
     }
 
@@ -118,7 +118,7 @@ public class GameplayController : MonoBehaviour
 
     public void CheckInfo(bool userDecision)
     {
-        bool status = ApprovalSystem.isExpired(clockSystem.GetCurrentDateTime(), characterInfo.GetInfoExpiredDateTime());
+        bool status = ApprovalSystem.isExpired(clockSystem.GetCurrentDateTime(), characterInfo.GetCardExpiredDateTime());
 
         switch (userDecision)
         {

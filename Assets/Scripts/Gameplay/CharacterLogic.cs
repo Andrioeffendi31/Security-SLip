@@ -46,7 +46,7 @@ public class CharacterLogic : MonoBehaviour
         if (GameConfiguration.DebugMode)
         {
             Debug.Log("Full Name : " + characterInfo.GetFullName());
-            Debug.Log("Info Expired DateTime : " + characterInfo.info.expired);
+            Debug.Log("Info Expired DateTime : " + characterInfo.GetCardExpiredDateTime());
         }
     }
 
