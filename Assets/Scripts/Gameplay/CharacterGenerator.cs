@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CharacterGenerator : MonoBehaviour
 {
-    private readonly InfoRandomizer infoRandomizer = new InfoRandomizer();
+    private InfoRandomizer infoRandomizer;
     
     [SerializeField]
     private GameplayController gameplayController;
@@ -14,6 +16,12 @@ public class CharacterGenerator : MonoBehaviour
 
     [SerializeField]
     private DoorController doorController;
+
+    [SerializeField]
+    private TextAsset databaseMale;
+
+    [SerializeField]
+    private TextAsset databaseFemale;
 
     [SerializeField]
     private GameObject[] characterPrefabs;
@@ -43,11 +51,17 @@ public class CharacterGenerator : MonoBehaviour
 
     public void Create()
     {
-        firstName = infoRandomizer.GetRandomizeFirstName();
-        middleName = infoRandomizer.GetRandomizeMiddleName();
-        lastName = infoRandomizer.GetRandomizeLastName();
+        // Load names from database
+        InfoRandomizer.DB_Male dbMale = JsonUtility.FromJson<InfoRandomizer.DB_Male>(databaseMale.text);
+        InfoRandomizer.DB_Female dbFemale = JsonUtility.FromJson<InfoRandomizer.DB_Female>(databaseFemale.text);
+        infoRandomizer = new InfoRandomizer(dbMale, dbFemale);
+
         genderType = infoRandomizer.GetRandomizeGender();
-        info = new Info();
+        firstName = infoRandomizer.GetRandomizeFirstName(genderType);
+        middleName = infoRandomizer.GetRandomizeMiddleName(genderType);
+        lastName = infoRandomizer.GetRandomizeLastName(genderType);
+        
+        info = CreateInfo();
         
         characterInfo = new Character(firstName, middleName, lastName, genderType, info);
 
@@ -62,6 +76,31 @@ public class CharacterGenerator : MonoBehaviour
             Debug.Log("Rambut : " + rambut);
             Debug.Log("Baju : " + modelBaju);
         }
+    }
+
+    private Info CreateInfo()
+    {
+        Info info = new Info();
+        // Inject generated character info into card
+        // Also generate new card info
+        info.card = GenerateCard();
+
+        return info;
+    }
+
+    private Card GenerateCard()
+    {
+        // Generate card info
+        string cardID = infoRandomizer.GetRandomizeCardID(GameConfiguration.minCardID, GameConfiguration.maxCardID);
+
+        DateTime dateTimeFrom = GameConfiguration.gameTime.AddDays(-GameConfiguration.generatedRangeCardDate);
+        DateTime dateTimeTo = GameConfiguration.gameTime.AddDays(GameConfiguration.generatedRangeCardDate);
+
+        // HARDCODED CREATED CARD DATE TIME
+        DateTime dateCreated = GameConfiguration.gameTime.AddDays(-10);
+        DateTime dateExpired = infoRandomizer.GetRandomDate(dateTimeFrom, dateTimeTo);
+
+        return new Card(firstName, middleName, lastName, genderType, cardID, dateCreated, dateExpired);
     }
 
     private GameObject InstantiateCharacter()
