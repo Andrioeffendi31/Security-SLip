@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     private void Init()
     {
+        GameConfiguration.Initialize();
         DontDestroyOnLoad(this);
 
         isPlaying = false;
