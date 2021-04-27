@@ -17,7 +17,7 @@ public class Data
 
     public Data()
     {
-        cardID = infoRandomizer.GetRandomizeCardID(GameConfiguration.minCardID, GameConfiguration.maxCardID);
+        cardID = $"{infoRandomizer.GetRandomizeCardID(GameConfiguration.minCardID, GameConfiguration.maxCardID)}{key}";
         firstName = infoRandomizer.GetRandomizeFirstName(infoRandomizer.GetRandomizeGender());
         middleName = infoRandomizer.GetRandomizeMiddleName(infoRandomizer.GetRandomizeGender());
         lastName = infoRandomizer.GetRandomizeLastName(infoRandomizer.GetRandomizeGender());
