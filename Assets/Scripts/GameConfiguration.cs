@@ -18,6 +18,10 @@ public static class GameConfiguration
 
     public static int generatedRangeCardDate { get; set; }
 
+    public static int minPatientLevel { get; set; }
+
+    public static int maxPatientLevel { get; set; }
+
     /// <summary>
     /// Main game configuration
     /// </summary>
@@ -33,7 +37,18 @@ public static class GameConfiguration
         // year month day hour minute second
         gameTime = new DateTime(2021, 3, 20, 7, 0, 0);
         secondPerRealSecond = 15;
+
+        // Game Difficulty
+        // Patient Level in seconds
+        minPatientLevel = 30;
+        maxPatientLevel = 60;
     }
 
     public static void ResetToDefault() { }
+
+    public static void Stage1() { }
+
+    public static void Stage2() { }
+
+    public static void Stage3() { }
 }

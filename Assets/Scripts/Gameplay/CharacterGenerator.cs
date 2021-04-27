@@ -164,7 +164,7 @@ public class CharacterGenerator : MonoBehaviour
         characterLogic.ApplyInfo(characterInfo);
 
         // Start character
-        characterLogic.Init();
+        characterLogic.Init(infoRandomizer.RandomNumber(GameConfiguration.minPatientLevel, GameConfiguration.maxPatientLevel));
 
         // Send Object to Gameplay Controller
         gameplayController.SetInfo(character);

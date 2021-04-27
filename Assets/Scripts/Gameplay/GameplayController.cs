@@ -124,7 +124,6 @@ public class GameplayController : MonoBehaviour
         {
             case true:
                 characterLogic.AllowedToEntry(true);
-                cardController.RemoveUserCardFromDesk();
                 if (status)
                 {
                     Debug.Log("WRONG DECISION");
@@ -134,7 +133,6 @@ public class GameplayController : MonoBehaviour
 
             case false:
                 characterLogic.AllowedToEntry(false);
-                cardController.RemoveUserCardFromDesk();
                 if (!status)
                 {
                     Debug.Log("WRONG DECISION");
