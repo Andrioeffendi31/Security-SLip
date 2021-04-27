@@ -6209,7 +6209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameplayController: {fileID: 51703539}
-  cardController: {fileID: 0}
+  cardController: {fileID: 51703544}
   doorController: {fileID: 51703543}
   databaseMale: {fileID: 4900000, guid: 3ee31942db471674fb962e9a700c8998, type: 3}
   databaseFemale: {fileID: 4900000, guid: 0238ba0840826a243995f0414583ec69, type: 3}

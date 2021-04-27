@@ -29,6 +29,8 @@ public class CharacterLogic : MonoBehaviour
 
     public Character characterInfo;
 
+    private int patientLevel;
+
     private bool allowMovement;
 
     private int idxPoint;
@@ -50,9 +52,10 @@ public class CharacterLogic : MonoBehaviour
         }
     }
 
-    public void Init()
+    public void Init(int patientLevel)
     {
         allowMovement = true;
+        this.patientLevel = patientLevel;
     }
 
     private void FixedUpdate()
@@ -114,6 +117,7 @@ public class CharacterLogic : MonoBehaviour
                 {
                     gameplayController.allowToChoose = true;
                     gameplayController.GiveCard();
+                    StartCoroutine(patientClock());
                 }
                 if (path) allowMovement = false;
                 break;
@@ -134,13 +138,21 @@ public class CharacterLogic : MonoBehaviour
         else idxPoint -= 1;
     }
 
-    private IEnumerator delay(int seconds)
+    private IEnumerator patientClock()
     {
-        characterAnim.SetBool("isWalking", false);
-        allowMovement = false;
-        yield return new WaitForSeconds(seconds);
-        allowMovement = true;
-        characterAnim.SetBool("isWalking", true);
+        yield return new WaitForSeconds(1);
+
+        patientLevel--;
+        Debug.Log($"Patient Level: { patientLevel }");
+
+        if (patientLevel != 0) {
+            StartCoroutine(patientClock());
+        }
+
+        if (patientLevel == 0)
+        {
+            AllowedToEntry(false);
+        }
     }
 
     public void ApplyInfo(Character character)
@@ -162,6 +174,10 @@ public class CharacterLogic : MonoBehaviour
             case true:
                 decision = true;
                 allowMovement = true;
+
+                cardController.RemoveUserCardFromDesk();
+                StopCoroutine(patientClock());
+
                 break;
 
             case false:
@@ -169,6 +185,10 @@ public class CharacterLogic : MonoBehaviour
                 idxPoint -= 1;
                 decision = true;
                 allowMovement = true;
+
+                cardController.RemoveUserCardFromDesk();
+                StopCoroutine(patientClock());
+
                 break;
         }
     }
