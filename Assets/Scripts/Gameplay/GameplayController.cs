@@ -59,7 +59,7 @@ public class GameplayController : MonoBehaviour
     private void LightDirection()
     {
         DateTime theTime = clockSystem.GetCurrentDateTime();
-        int seconds = theTime.Hour * 3600 + theTime.Minute*60 + theTime.Second;
+        int seconds = (theTime.Hour * 3600) + (theTime.Minute * 60) + theTime.Second;
         DirectionalLight.transform.localRotation = Quaternion.Euler(50, (seconds * 0.25f)/5, 0);
     }
 
@@ -72,7 +72,6 @@ public class GameplayController : MonoBehaviour
         score = 0;
         scoreProgressBar.fillAmount = 0;
         allowToChoose = false;
-        
         
         // Set Game Time and start the clock
         clockSystem.SetStartDateTime(GameConfiguration.gameTime);
