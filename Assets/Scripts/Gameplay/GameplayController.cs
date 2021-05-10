@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,8 @@ public class GameplayController : MonoBehaviour
     [SerializeField]
     private CharacterGenerator characterGenerator;
 
+    private AudioManager audioManager;
+
     private GameObject character;
 
     private CharacterLogic characterLogic;
@@ -29,6 +32,9 @@ public class GameplayController : MonoBehaviour
     private Character characterInfo;
 
     private GameManager gameManager;
+
+    [SerializeField]
+    private GameObject DirectionalLight;
 
     public bool allowToChoose { get; set; }
 
@@ -41,9 +47,20 @@ public class GameplayController : MonoBehaviour
     
     private void Update()
     {
+        //
+        
+        LightDirection();
+
         // Game Over
         if (clockSystem.GetCurrentDateTime().Hour >= 8)
             gameManager.GoToMainMenu();
+    }
+
+    private void LightDirection()
+    {
+        DateTime theTime = clockSystem.GetCurrentDateTime();
+        int seconds = theTime.Hour * 3600 + theTime.Minute*60 + theTime.Second;
+        DirectionalLight.transform.localRotation = Quaternion.Euler(50, (seconds * 0.25f)/5, 0);
     }
 
     private void Init()
@@ -55,6 +72,7 @@ public class GameplayController : MonoBehaviour
         score = 0;
         scoreProgressBar.fillAmount = 0;
         allowToChoose = false;
+        
         
         // Set Game Time and start the clock
         clockSystem.SetStartDateTime(GameConfiguration.gameTime);
