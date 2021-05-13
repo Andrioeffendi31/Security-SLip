@@ -83,6 +83,10 @@ public class GameplayController : MonoBehaviour
         // Debug start game time
         if (GameConfiguration.DebugMode)
             Debug.Log("Start DateTime: " + clockSystem.GetCurrentDateTime());
+
+        audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
+
+        Debug.Log(audioManager.sfxAlarm);
     }
 
     private void UpdateProgressBar()
