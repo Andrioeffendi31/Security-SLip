@@ -15,7 +15,7 @@ public class GameplayController : MonoBehaviour
     private ApprovalSystem ApprovalSystem = new ApprovalSystem();
 
     [SerializeField]
-    private Image scoreProgressBar;
+    private Text scoreText;
 
     [SerializeField]
     private ClockSystem clockSystem;
@@ -70,7 +70,7 @@ public class GameplayController : MonoBehaviour
         gameManager.StartGame(this);
 
         score = 0;
-        scoreProgressBar.fillAmount = 0;
+        scoreText.text = score.ToString();
         allowToChoose = false;
         
         // Set Game Time and start the clock
@@ -91,7 +91,7 @@ public class GameplayController : MonoBehaviour
 
     private void UpdateProgressBar()
     {
-        scoreProgressBar.fillAmount = (float) score / 10;
+        scoreText.text = score.ToString();
     }
 
     public void SpawnCharacter()

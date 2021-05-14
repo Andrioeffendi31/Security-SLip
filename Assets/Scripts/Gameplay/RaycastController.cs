@@ -29,6 +29,7 @@ public class RaycastController : MonoBehaviour
         if (_selection != null)
         {
             crosshair.sprite = normal_crosshair;
+            crosshair.rectTransform.localScale = new Vector2(0.3f, 0.3f);
             _selection = null;
         }
 
@@ -40,6 +41,7 @@ public class RaycastController : MonoBehaviour
             {
                 if (selection != null)
                     crosshair.sprite = interact_crosshair;
+                    crosshair.rectTransform.localScale = new Vector2(1, 1);
                 _selection = selection;
             }
         }
