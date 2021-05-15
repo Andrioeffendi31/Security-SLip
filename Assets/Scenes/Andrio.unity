@@ -1574,6 +1574,7 @@ MonoBehaviour:
   databaseFemale: {fileID: 4900000, guid: 0238ba0840826a243995f0414583ec69, type: 3}
   data_prefab: {fileID: 5954524503154715959, guid: ca56c53bbac7ad343b2e8f9c283d0dfb, type: 3}
   data_content: {fileID: 129870478}
+  pending: {fileID: 229642340}
   data_realName: 
   data_realID: 
 --- !u!1 &726747164
@@ -2033,7 +2034,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1628710966}
   m_HandleRect: {fileID: 1628710965}
   m_Direction: 2
-  m_Value: 0.9999993
+  m_Value: 1
   m_Size: 0.8414775
   m_NumberOfSteps: 0
   m_OnValueChanged:
