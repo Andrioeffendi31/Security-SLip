@@ -351,7 +351,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Seacrh...
+  m_Text: Search...
 --- !u!222 &52046820
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1390,6 +1390,8 @@ MonoBehaviour:
   databaseFemale: {fileID: 4900000, guid: 0238ba0840826a243995f0414583ec69, type: 3}
   data_prefab: {fileID: 5954524503154715959, guid: ca56c53bbac7ad343b2e8f9c283d0dfb, type: 3}
   data_content: {fileID: 129870478}
+  data_realName: 
+  data_realID: 
 --- !u!1 &726747164
 GameObject:
   m_ObjectHideFlags: 0
@@ -1698,7 +1700,7 @@ GameObject:
   - component: {fileID: 1084336361}
   - component: {fileID: 1084336360}
   m_Layer: 5
-  m_Name: Text
+  m_Name: SearchText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2035,6 +2037,7 @@ GameObject:
   - component: {fileID: 1227136031}
   - component: {fileID: 1227136030}
   - component: {fileID: 1227136029}
+  - component: {fileID: 1227136032}
   m_Layer: 5
   m_Name: FindButton
   m_TagString: Untagged
@@ -2104,7 +2107,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1227136030}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1227136032}
+        m_TargetAssemblyTypeName: SearchBar, Assembly-CSharp
+        m_MethodName: Search
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1227136030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2143,6 +2158,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1227136027}
   m_CullTransparentMesh: 1
+--- !u!114 &1227136032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227136027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba2fee30c6f9f14985ff7539ae9cd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameComputer: {fileID: 648406916}
+  searchBar: {fileID: 1789141820}
 --- !u!1 &1306777655
 GameObject:
   m_ObjectHideFlags: 0
