@@ -1,9 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
-using System.IO;
 
 public class NameComputer : MonoBehaviour
 {
@@ -15,11 +11,15 @@ public class NameComputer : MonoBehaviour
     private SearchBar searchBar;
     public GameObject data_prefab;
     public GameObject data_content;
+    public GameObject pending;
+
     public string data_realName;
     public string data_realID;
     int counter_name = 50;
 
     void Start(){
+        pending.gameObject.SetActive (false);
+
         foreach(Transform child in data_content.transform){
             GameObject.Destroy(child.gameObject);
         }
@@ -46,14 +46,23 @@ public class NameComputer : MonoBehaviour
     }
 
     public void SearchResult(string searchForName){
+        //For Testing
         data_realID = "69420";
         data_realName = "nemo ded";
-        Debug.Log(searchForName);
+        //////////////////////////////////////////
+
+        pending.gameObject.SetActive (true);
+        StartCoroutine(Pending(searchForName));
+
         GameObject data = Instantiate(data_prefab);
 
         foreach(Transform child in data_content.transform){
             GameObject.Destroy(child.gameObject);
         }
+    }
+
+    public void SearchDone(string searchForName){
+        GameObject data = Instantiate(data_prefab);
 
         if(searchForName == data_realName){
             foreach(Transform child in data_content.transform){
@@ -65,5 +74,14 @@ public class NameComputer : MonoBehaviour
             data.GetComponent<RectTransform>().localScale = new Vector2(1, 1);
         }
     }
-    
+
+    IEnumerator Pending(string searchForName){
+        Debug.Log("Courotine Start");
+
+        yield return new WaitForSeconds(10);
+
+        pending.gameObject.SetActive (false);
+        SearchDone(searchForName);
+        Debug.Log("Courotine Done");
+    }
 }
