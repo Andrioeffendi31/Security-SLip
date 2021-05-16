@@ -8,7 +8,7 @@ public static class GameConfiguration
 
     public static DateTime gameTime { get; set; }
 
-    public static int secondPerRealSecond { get; set; }
+    public static int millisecondPerRealMillisecond { get; set; }
 
     public static string startCardID { get; set; }
 
@@ -36,7 +36,7 @@ public static class GameConfiguration
         
         // year month day hour minute second
         gameTime = new DateTime(2021, 3, 20, 7, 0, 0);
-        secondPerRealSecond = 15;
+        millisecondPerRealMillisecond = 10000;
 
         // Game Difficulty
         // Patient Level in seconds

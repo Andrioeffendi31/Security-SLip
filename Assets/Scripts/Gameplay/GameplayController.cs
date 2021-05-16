@@ -23,6 +23,12 @@ public class GameplayController : MonoBehaviour
     [SerializeField]
     private CharacterGenerator characterGenerator;
 
+    [SerializeField]
+    private GameObject DirectionalLight;
+
+    [SerializeField]
+    private Material skyboxMaterial;
+
     private AudioManager audioManager;
 
     private GameObject character;
@@ -32,9 +38,6 @@ public class GameplayController : MonoBehaviour
     private Character characterInfo;
 
     private GameManager gameManager;
-
-    [SerializeField]
-    private GameObject DirectionalLight;
 
     public bool allowToChoose { get; set; }
 
@@ -47,24 +50,32 @@ public class GameplayController : MonoBehaviour
     
     private void Update()
     {
-        //
-        
+        // Light system
         LightDirection();
 
-        // Game Over
-        if (clockSystem.GetCurrentDateTime().Hour >= 8)
-            gameManager.GoToMainMenu();
+        // // Game Over
+        // if (clockSystem.GetCurrentDateTime().Hour >= 8)
+        //     gameManager.GoToMainMenu();
     }
 
     private void LightDirection()
     {
         DateTime theTime = clockSystem.GetCurrentDateTime();
-        int seconds = (theTime.Hour * 3600) + (theTime.Minute * 60) + theTime.Second;
-        DirectionalLight.transform.localRotation = Quaternion.Euler(50, (seconds * 0.25f)/5, 0);
+        float seconds = (theTime.Hour * 3600) + (theTime.Minute * 60) + theTime.Second;
+
+        // Change sun position
+        DirectionalLight.transform.localRotation = Quaternion.Euler((seconds * 0.0041667f) - 90, -60, 0);
+
+        // Blend skybox material
+        float blendTime = (-(seconds * seconds) / 1866240000) + (seconds / 21600);
+        skyboxMaterial.SetFloat("_BlendCubemaps", blendTime);
     }
 
     private void Init()
     {
+        // Set skybox material
+        RenderSettings.skybox = skyboxMaterial;
+
         // Attach to Game Manager
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         gameManager.StartGame(this);
