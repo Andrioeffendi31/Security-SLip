@@ -26,6 +26,9 @@ public class CharacterGenerator : MonoBehaviour
     [SerializeField]
     private GameObject[] characterPrefabs;
 
+    [SerializeField]
+    private Camera mainCamera;
+
     private GameObject character;
 
     private string gender;
@@ -91,13 +94,14 @@ public class CharacterGenerator : MonoBehaviour
     private Card GenerateCard()
     {
         // Generate card info
-        string cardID = infoRandomizer.GetRandomizeCardID(GameConfiguration.minCardID, GameConfiguration.maxCardID);
+        int generatedPrimaryKey = infoRandomizer.RandomNumber(100, 500);
+        string cardID = $"{infoRandomizer.GetRandomizeCardID(GameConfiguration.minCardID, GameConfiguration.maxCardID)}{generatedPrimaryKey}";
 
         DateTime dateTimeFrom = GameConfiguration.gameTime.AddDays(-GameConfiguration.generatedRangeCardDate);
         DateTime dateTimeTo = GameConfiguration.gameTime.AddDays(GameConfiguration.generatedRangeCardDate);
 
         // HARDCODED CREATED CARD DATE TIME
-        DateTime dateCreated = GameConfiguration.gameTime.AddDays(-10);
+        DateTime dateCreated = GameConfiguration.gameTime.AddDays(-5);
         DateTime dateExpired = infoRandomizer.GetRandomDate(dateTimeFrom, dateTimeTo);
 
         return new Card(firstName, middleName, lastName, genderType, cardID, dateCreated, dateExpired);
@@ -118,7 +122,7 @@ public class CharacterGenerator : MonoBehaviour
             for (int i = 0; i < characterPrefabs[skin].transform.childCount; i++)
             {
                 var child = characterPrefabs[skin].transform.GetChild(i).gameObject;
-                if (child != null)
+                if (child != null && child.name != "Canvas")
                     child.SetActive(false);
             }
 
@@ -141,7 +145,7 @@ public class CharacterGenerator : MonoBehaviour
             for (int i = 0; i < characterPrefabs[skin + 4].transform.childCount; i++)
             {
                 var child = characterPrefabs[skin + 4].transform.GetChild(i).gameObject;
-                if (child != null)
+                if (child != null && child.name != "Canvas")
                     child.SetActive(false);
             }
 
@@ -160,7 +164,7 @@ public class CharacterGenerator : MonoBehaviour
     private void SetupCharacter(GameObject character, Character characterInfo)
     {
         CharacterLogic characterLogic = character.GetComponent<CharacterLogic>();
-        characterLogic.Attach(gameplayController, cardController, doorController);
+        characterLogic.Attach(gameplayController, cardController, doorController, mainCamera);
         characterLogic.ApplyInfo(characterInfo);
 
         // Start character

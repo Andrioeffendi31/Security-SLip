@@ -8,17 +8,24 @@ public class NameComputer : MonoBehaviour
 
     [SerializeField]
     private TextAsset databaseFemale;
+    
     private SearchBar searchBar;
+
     public GameObject data_prefab;
+
     public GameObject data_content;
+
     public GameObject pending;
 
     public string data_realName;
-    public string data_realID;
-    int counter_name = 50;
 
-    void Start(){
-        pending.gameObject.SetActive (false);
+    public string data_realID;
+
+    int counter_name = 100;
+
+    void Start()
+    {
+        pending.gameObject.SetActive(false);
 
         foreach(Transform child in data_content.transform){
             GameObject.Destroy(child.gameObject);
@@ -36,21 +43,13 @@ public class NameComputer : MonoBehaviour
         }
     }
 
-    public bool CheckRealData(){
-        if(data_realName == ""){ return false; }
-        return true;
-    }
-
-    void ResetRealData(){
+    public void ResetRealData()
+    {
         data_realName = "";
     }
 
-    public void SearchResult(string searchForName){
-        //For Testing
-        data_realID = "69420";
-        data_realName = "nemo ded";
-        //////////////////////////////////////////
-
+    public void SearchResult(string searchForName)
+    {
         pending.gameObject.SetActive (true);
         StartCoroutine(Pending(searchForName));
 
@@ -61,7 +60,8 @@ public class NameComputer : MonoBehaviour
         }
     }
 
-    public void SearchDone(string searchForName){
+    public void SearchDone(string searchForName)
+    {
         GameObject data = Instantiate(data_prefab);
 
         if(searchForName == data_realName){
@@ -75,7 +75,8 @@ public class NameComputer : MonoBehaviour
         }
     }
 
-    IEnumerator Pending(string searchForName){
+    IEnumerator Pending(string searchForName)
+    {
         Debug.Log("Courotine Start");
 
         yield return new WaitForSeconds(10);

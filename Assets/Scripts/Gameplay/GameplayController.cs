@@ -158,6 +158,14 @@ public class GameplayController : MonoBehaviour
             cardController.SetCardID(characterInfo.GetCardID());
             cardController.SetExpiredDate(characterInfo.GetCardExpiredDateTime().ToString("dd/MM/yyyy"));
         }
+        
+        // Randomize if the character data should inject to database
+        if (infoRandomizer.ShouldInjectToDatabase())
+        {
+            nameComputer.data_realID = characterInfo.GetCardID();
+            nameComputer.data_realName = characterInfo.GetFullName();
+            Debug.Log("INJECTED TO DATABASE");
+        }      
     }
 
     public void GiveCard()
@@ -167,12 +175,13 @@ public class GameplayController : MonoBehaviour
 
     public void CheckInfo(bool userDecision)
     {
-        bool status = ApprovalSystem.isExpired(clockSystem.GetCurrentDateTime(), characterInfo.GetCardExpiredDateTime());
+        bool status = ApprovalSystem.checkFor(characterInfo, clockSystem.GetCurrentDateTime(), nameComputer.data_realName);
 
         switch (userDecision)
         {
             case true:
                 characterLogic.AllowedToEntry(true);
+                nameComputer.ResetRealData();
                 if (status)
                 {
                     Debug.Log("WRONG DECISION");
@@ -182,6 +191,7 @@ public class GameplayController : MonoBehaviour
 
             case false:
                 characterLogic.AllowedToEntry(false);
+                nameComputer.ResetRealData();
                 if (!status)
                 {
                     Debug.Log("WRONG DECISION");
