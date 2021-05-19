@@ -1,16 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterLogic : MonoBehaviour
 {
     private readonly int SPEED = 1;
+
+    private readonly Color PATIENT_HIGH_COLOR = new Color32(112, 191, 68, 255);
+
+    private readonly Color PATIENT_LOW_COLOR = new Color32(191, 68, 77, 255);
     
     [SerializeField]
     private Animator characterAnim;
 
     [SerializeField]
+    private Camera mainCamera;
+
+    [SerializeField]
     private Rigidbody rb;
+
+    [SerializeField]
+    private Canvas canvas;
+
+    [SerializeField]
+    private Image patientLevelBG;
+
+    [SerializeField]
+    private Image patientLevelProgress;
 
     // Character hardcoded path
     private Vector3[] point = {
@@ -31,6 +48,8 @@ public class CharacterLogic : MonoBehaviour
 
     private int patientLevel;
 
+    private int currentPatientLevel;
+
     private bool allowMovement;
 
     private int idxPoint;
@@ -47,6 +66,7 @@ public class CharacterLogic : MonoBehaviour
 
         if (GameConfiguration.DebugMode)
         {
+            Debug.Log("Card ID   : " + characterInfo.GetCardID());
             Debug.Log("Full Name : " + characterInfo.GetFullName());
             Debug.Log("Info Expired DateTime : " + characterInfo.GetCardExpiredDateTime());
         }
@@ -56,11 +76,19 @@ public class CharacterLogic : MonoBehaviour
     {
         allowMovement = true;
         this.patientLevel = patientLevel;
+        this.currentPatientLevel = patientLevel;
+
+        patientLevelBG.color = PATIENT_HIGH_COLOR;
     }
 
     private void FixedUpdate()
     {
         MoveCharacter();
+    }
+
+    private void LateUpdate()
+    {
+        canvas.transform.LookAt(mainCamera.transform);
     }
 
     private void MoveCharacter()
@@ -142,14 +170,20 @@ public class CharacterLogic : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        patientLevel--;
-        Debug.Log($"Patient Level: { patientLevel }");
+        currentPatientLevel--;
+        Debug.Log($"Patient Level: { currentPatientLevel }");
 
-        if (patientLevel != 0) {
+        float fillAmount = ((float) currentPatientLevel / patientLevel);
+
+        patientLevelProgress.fillAmount = fillAmount;
+        patientLevelBG.color = Color.Lerp(PATIENT_LOW_COLOR, PATIENT_HIGH_COLOR, fillAmount);
+
+        if (currentPatientLevel != 0)
+        {
             StartCoroutine(patientClock());
         }
 
-        if (patientLevel == 0)
+        if (currentPatientLevel == 0)
         {
             AllowedToEntry(false);
         }
@@ -160,11 +194,12 @@ public class CharacterLogic : MonoBehaviour
         this.characterInfo = character;
     }
 
-    public void Attach(GameplayController gameplayController, CardController cardController, DoorController doorController)
+    public void Attach(GameplayController gameplayController, CardController cardController, DoorController doorController, Camera mainCamera)
     {
         this.gameplayController = gameplayController;
         this.cardController = cardController;
         this.doorController = doorController;
+        this.mainCamera = mainCamera;
     }
     
     public void AllowedToEntry(bool answer)
@@ -176,7 +211,7 @@ public class CharacterLogic : MonoBehaviour
                 allowMovement = true;
 
                 cardController.RemoveUserCardFromDesk();
-                StopCoroutine(patientClock());
+                StopAllCoroutines();
 
                 break;
 
@@ -187,7 +222,7 @@ public class CharacterLogic : MonoBehaviour
                 allowMovement = true;
 
                 cardController.RemoveUserCardFromDesk();
-                StopCoroutine(patientClock());
+                StopAllCoroutines();
 
                 break;
         }

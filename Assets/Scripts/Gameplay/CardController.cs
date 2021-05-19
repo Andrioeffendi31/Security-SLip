@@ -30,6 +30,9 @@ public class CardController : MonoBehaviour
     private Text gender;
 
     [SerializeField]
+    private Text cardID;
+
+    [SerializeField]
     private Text expiredDate;
 
     public void PutUserCardInDesk()
@@ -64,6 +67,7 @@ public class CardController : MonoBehaviour
                 this.gender.color = TEXT_MALE_COLOR;
                 this.labelGender.color = TEXT_MALE_COLOR;
                 this.fullName.color = TEXT_MALE_COLOR;
+                this.cardID.color = TEXT_MALE_COLOR;
                 this.expiredDate.color = TEXT_MALE_COLOR;
                 
                 maleBG.SetActive(true);
@@ -74,6 +78,7 @@ public class CardController : MonoBehaviour
                 this.gender.color = TEXT_FEMALE_COLOR;
                 this.labelGender.color = TEXT_FEMALE_COLOR;
                 this.fullName.color = TEXT_FEMALE_COLOR;
+                this.cardID.color = TEXT_FEMALE_COLOR;
                 this.expiredDate.color = TEXT_FEMALE_COLOR;
 
                 femaleBG.SetActive(true);
@@ -84,6 +89,11 @@ public class CardController : MonoBehaviour
     public void SetFullName(string fullName)
     {
         this.fullName.text = fullName;
+    }
+
+    public void SetCardID(string cardID)
+    {
+        this.cardID.text = cardID;
     }
 
     public void SetExpiredDate(string expiredDate)

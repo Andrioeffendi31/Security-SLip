@@ -30,17 +30,13 @@ public class Character
     public string GetFullName()
     {
         string fullName;
-
-        // If middlename exists
-        // Show only the 1st middle name character
-        if (middleName != null)
-        {
-            fullName = firstName + " " + middleName[0] + ". \n" + lastName;
-            return fullName;
-        }
-
-        fullName = firstName + " " + lastName;
+        fullName = $"{firstName} {middleName} {lastName}";
         return fullName;
+    }
+    
+    public string GetCardID()
+    {
+        return info.card.cardID;
     }
 
     public DateTime GetCardExpiredDateTime()
