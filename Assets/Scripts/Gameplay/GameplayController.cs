@@ -260,6 +260,8 @@ public class GameplayController : MonoBehaviour
                 if (!status)
                 {
                     Debug.Log("WRONG DECISION");
+                    CheckPenalty();
+                    penaltyCount++;
                     return;
                 }
                 break;
@@ -270,6 +272,8 @@ public class GameplayController : MonoBehaviour
                 if (status)
                 {
                     Debug.Log("WRONG DECISION");
+                    CheckPenalty();
+                    penaltyCount++;
                     return;
                 }
                 break;
@@ -320,7 +324,6 @@ public class GameplayController : MonoBehaviour
 
     private void GameOver()
     {
-        Debug.Log("GAME OVER");
         gameManager.EndGame(score);
     }
 }

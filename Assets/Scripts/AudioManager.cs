@@ -21,28 +21,36 @@ public class AudioManager : MonoBehaviour
 
     public AudioMixer masterMixer;
 
-    public void setMasterVolume(float sliderValue)
-    {
-        masterMixer.SetFloat("Mastervol", Mathf.Log(sliderValue) * 20);
-        PlayerPrefs.SetFloat("Mastervol", sliderValue);
-    }
-
-    public void setBGMVolume(float sliderValue)
-    {
-        masterMixer.SetFloat("BGMvol", Mathf.Log(sliderValue) * 20);
-        PlayerPrefs.SetFloat("BGMvol", sliderValue);
-    }
-
-    public void setSFXVolume(float sliderValue)
-    {
-        masterMixer.SetFloat("SFXvol", Mathf.Log(sliderValue) * 20);
-        PlayerPrefs.SetFloat("SFXvol", sliderValue);
-    }
-
     private void Start()
     {
         DontDestroyOnLoad(this);
         PlayBgmMenu();
+        Init();
+    }
+
+    private void Init()
+    {
+        masterMixer.SetFloat("Mastervol", Mathf.Log(PlayerPrefs.GetFloat("Mastervol")) * 20);
+        masterMixer.SetFloat("BGMvol", Mathf.Log(PlayerPrefs.GetFloat("BGMvol")) * 20);
+        masterMixer.SetFloat("SFXvol", Mathf.Log(PlayerPrefs.GetFloat("SFXvol")) * 20);
+    }
+
+    public void setMasterVolume(Slider slider)
+    {
+        masterMixer.SetFloat("Mastervol", Mathf.Log(slider.value) * 20);
+        PlayerPrefs.SetFloat("Mastervol", slider.value);
+    }
+
+    public void setBGMVolume(Slider slider)
+    {
+        masterMixer.SetFloat("BGMvol", Mathf.Log(slider.value) * 20);
+        PlayerPrefs.SetFloat("BGMvol", slider.value);
+    }
+
+    public void setSFXVolume(Slider slider)
+    {
+        masterMixer.SetFloat("SFXvol", Mathf.Log(slider.value) * 20);
+        PlayerPrefs.SetFloat("SFXvol", slider.value);
     }
 
     public void PlayBgmMenu()
