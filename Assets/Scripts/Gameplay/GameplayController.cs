@@ -12,6 +12,9 @@ public class GameplayController : MonoBehaviour
     private CardController cardController;
 
     [SerializeField]
+    private NameComputer nameComputer;
+
+    [SerializeField]
     private ApprovalSystem ApprovalSystem = new ApprovalSystem();
 
     [SerializeField]
@@ -23,6 +26,16 @@ public class GameplayController : MonoBehaviour
     [SerializeField]
     private CharacterGenerator characterGenerator;
 
+    [SerializeField]
+    private GameObject DirectionalLight;
+
+    [SerializeField]
+    private Material skyboxMaterial;
+
+    private Color fogDayColor;
+
+    private Color fogNightColor;
+
     private AudioManager audioManager;
 
     private GameObject character;
@@ -32,9 +45,6 @@ public class GameplayController : MonoBehaviour
     private Character characterInfo;
 
     private GameManager gameManager;
-
-    [SerializeField]
-    private GameObject DirectionalLight;
 
     public bool allowToChoose { get; set; }
 
@@ -47,24 +57,39 @@ public class GameplayController : MonoBehaviour
     
     private void Update()
     {
-        //
-        
+        // Light system
         LightDirection();
 
-        // Game Over
-        if (clockSystem.GetCurrentDateTime().Hour >= 8)
-            gameManager.GoToMainMenu();
+        // // Game Over
+        // if (clockSystem.GetCurrentDateTime().Hour >= 8)
+        //     gameManager.GoToMainMenu();
     }
 
     private void LightDirection()
     {
         DateTime theTime = clockSystem.GetCurrentDateTime();
-        int seconds = (theTime.Hour * 3600) + (theTime.Minute * 60) + theTime.Second;
-        DirectionalLight.transform.localRotation = Quaternion.Euler(50, (seconds * 0.25f)/5, 0);
+        float seconds = (theTime.Hour * 3600) + (theTime.Minute * 60) + theTime.Second;
+
+        // Change sun position
+        DirectionalLight.transform.localRotation = Quaternion.Euler((seconds * 0.0041667f) - 90, -60, 0);
+
+        // Blend skybox material
+        float blendTime = (-(seconds * seconds) / 1866240000) + (seconds / 21600);
+        skyboxMaterial.SetFloat("_BlendCubemaps", blendTime);
+
+        // Blend fog color
+        RenderSettings.fogColor = Color.Lerp(fogNightColor, fogDayColor, blendTime);
     }
 
     private void Init()
     {
+        // Set skybox material
+        RenderSettings.skybox = skyboxMaterial;
+
+        // Set fog color
+        fogDayColor = new Color32(202, 237, 250, 255);
+        fogNightColor = new Color32(0, 0, 0,255);
+
         // Attach to Game Manager
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         gameManager.StartGame(this);
@@ -122,14 +147,25 @@ public class GameplayController : MonoBehaviour
         {
             cardController.SetGender(0);
             cardController.SetFullName(characterInfo.GetFullName());
+            cardController.SetCardID(characterInfo.GetCardID());
             cardController.SetExpiredDate(characterInfo.GetCardExpiredDateTime().ToString("dd/MM/yyyy"));
-        } else
+        } 
+        else
         if (characterInfo.gender == 1)
         {
             cardController.SetGender(1);
             cardController.SetFullName(characterInfo.GetFullName());
+            cardController.SetCardID(characterInfo.GetCardID());
             cardController.SetExpiredDate(characterInfo.GetCardExpiredDateTime().ToString("dd/MM/yyyy"));
         }
+        
+        // Randomize if the character data should inject to database
+        if (infoRandomizer.ShouldInjectToDatabase())
+        {
+            nameComputer.data_realID = characterInfo.GetCardID();
+            nameComputer.data_realName = characterInfo.GetFullName();
+            Debug.Log("INJECTED TO DATABASE");
+        }      
     }
 
     public void GiveCard()
@@ -139,12 +175,13 @@ public class GameplayController : MonoBehaviour
 
     public void CheckInfo(bool userDecision)
     {
-        bool status = ApprovalSystem.isExpired(clockSystem.GetCurrentDateTime(), characterInfo.GetCardExpiredDateTime());
+        bool status = ApprovalSystem.checkFor(characterInfo, clockSystem.GetCurrentDateTime(), nameComputer.data_realName);
 
         switch (userDecision)
         {
             case true:
                 characterLogic.AllowedToEntry(true);
+                nameComputer.ResetRealData();
                 if (status)
                 {
                     Debug.Log("WRONG DECISION");
@@ -154,6 +191,7 @@ public class GameplayController : MonoBehaviour
 
             case false:
                 characterLogic.AllowedToEntry(false);
+                nameComputer.ResetRealData();
                 if (!status)
                 {
                     Debug.Log("WRONG DECISION");

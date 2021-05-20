@@ -35,16 +35,16 @@ public class ClockSystem : MonoBehaviour
 
     private IEnumerator TickTime()
     {
-        time = time.AddSeconds(GameConfiguration.secondPerRealSecond);
+        time = time.AddMilliseconds(GameConfiguration.millisecondPerRealMillisecond);
         computerUI_clock.text = time.ToString("HH:mm");
         computerUI_date.text = time.ToString("dddd, MMMM dd");
 
         if (GameConfiguration.DebugMode)
         {
-            Debug.Log((int)(time.Hour) + ":" + (int)(time.Minute) + ":" + (int)(time.Second));
+            // Debug.Log((int)(time.Hour) + ":" + (int)(time.Minute) + ":" + (int)(time.Second));
         }
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.001f);
         StartCoroutine(TickTime());
     }
 

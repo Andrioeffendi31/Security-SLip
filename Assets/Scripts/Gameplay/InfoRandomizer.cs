@@ -100,4 +100,9 @@ public class InfoRandomizer
         int range = (dateTimeTo - dateTimeFrom).Days;
         return dateTimeFrom.AddDays(Random.Range(0, range));
     }
+
+    public bool ShouldInjectToDatabase()
+    {
+        return (Random.value >= 0.5);
+    }
 }

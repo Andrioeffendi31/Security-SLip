@@ -17,6 +17,12 @@ public class InputController : MonoBehaviour
     private GameObject computerUI;
 
     [SerializeField]
+    private GameObject databaseUI;
+
+    [SerializeField]
+    private GameObject upgradeUI;
+
+    [SerializeField]
     private CardController cardController;
 
     void Update()
@@ -79,6 +85,26 @@ public class InputController : MonoBehaviour
     {
         cameraController.EnableCameraMovement();
         computerUI.SetActive(false);
+    }
+
+    public void OpenDatabaseUI()
+    {
+        databaseUI.SetActive(true);
+    }
+
+    public void CloseDatabaseUI()
+    {
+        databaseUI.SetActive(false);
+    }
+
+    public void OpenUpgradeUI()
+    {
+        upgradeUI.SetActive(true);
+    }
+
+    public void CloseUpgradeUI()
+    {
+        upgradeUI.SetActive(false);
     }
 
     private void OpenCardUI()
