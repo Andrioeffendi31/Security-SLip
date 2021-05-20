@@ -57,11 +57,11 @@ public static class GameConfiguration
         databaseSearchTime = 20;
 
         // Upgrade perks
-        searchLevel = 1;
-        decorationLevel = 1;
-        scoreLevel = 1;
+        searchLevel = 0;
+        decorationLevel = 0;
+        scoreLevel = 0;
         scoreMultiplier = 1;
-        musicLevel = 1;
+        musicLevel = 0;
     }
 
     public static void ResetToDefault() { }

@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     private bool isPlaying;
 
+    public int finalScore;
+
     private void Start()
     {
         Init();
@@ -25,7 +27,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         isPlaying = false;
-        Cursor.lockState = CursorLockMode.Confined;
+
+        finalScore = 0;
     }
 
     public void StartGame(GameplayController gameplayController)
@@ -34,9 +37,13 @@ public class GameManager : MonoBehaviour
         isPlaying = true;
     }
 
-    public void EndGame()
+    public void EndGame(int finalScore)
     {
+        this.finalScore = finalScore;
+
         isPlaying = false;
+
+        SceneManager.LoadScene("Score");
     }
 
     public void GoToMainMenu()

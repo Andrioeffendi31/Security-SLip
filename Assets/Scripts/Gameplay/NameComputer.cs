@@ -8,6 +8,8 @@ public class NameComputer : MonoBehaviour
 
     [SerializeField]
     private TextAsset databaseFemale;
+
+    private Animator searchAnimator;
     
     private SearchBar searchBar;
 
@@ -26,6 +28,7 @@ public class NameComputer : MonoBehaviour
     void Start()
     {
         pending.gameObject.SetActive(false);
+        searchAnimator = pending.GetComponent<Animator>();
 
         foreach(Transform child in data_content.transform){
             GameObject.Destroy(child.gameObject);
@@ -50,7 +53,11 @@ public class NameComputer : MonoBehaviour
 
     public void SearchResult(string searchForName)
     {
-        pending.gameObject.SetActive (true);
+        pending.gameObject.SetActive(true);
+
+        // Set animation level according to search time
+        searchAnimator.SetFloat("speedMultiplier", ((float) 10 / GameConfiguration.databaseSearchTime));
+        
         StartCoroutine(Pending(searchForName));
 
         GameObject data = Instantiate(data_prefab);
@@ -78,6 +85,7 @@ public class NameComputer : MonoBehaviour
     IEnumerator Pending(string searchForName)
     {
         Debug.Log("Courotine Start");
+        Debug.Log(GameConfiguration.databaseSearchTime);
 
         yield return new WaitForSeconds(GameConfiguration.databaseSearchTime);
 

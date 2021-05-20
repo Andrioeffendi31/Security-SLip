@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class GameplayController : MonoBehaviour
 {
+    private readonly string PAUSE_WARNING = "What do you think you are doing?! Keep WORKING!!!";
+    private readonly string ONE_STRIKE = "I'm warning you! (1 Strikes)";
+    private readonly string TWO_STRIKE = "Are you challenging me!? (2 Strikes)";
+    private readonly string THREE_STRIKE = "1 More mistake and you D.E.A.D!";
+
     private readonly InfoRandomizer infoRandomizer = new InfoRandomizer();
 
     [SerializeField]
@@ -35,6 +40,18 @@ public class GameplayController : MonoBehaviour
     [SerializeField]
     private Material skyboxMaterial;
 
+    [SerializeField]
+    private TextTypeWrite pauseText;
+
+    [SerializeField]
+    private TextTypeWrite notificationStrikeOne;
+
+    [SerializeField]
+    private TextTypeWrite notificationStrikeTwo;
+
+    [SerializeField]
+    private TextTypeWrite notificationStrikeThree;
+
     private Color fogDayColor;
 
     private Color fogNightColor;
@@ -52,6 +69,18 @@ public class GameplayController : MonoBehaviour
     public bool allowToChoose { get; set; }
 
     private int score;
+
+    private int overallScore;
+
+    private int minPatientLevelDrop;
+
+    private int maxPatientLevelDrop;
+
+    private int penaltyCount;
+
+    private bool statusNotificationBubble;
+
+    private bool tryToPauseOnce;
 
     private void Start()
     {
@@ -80,6 +109,9 @@ public class GameplayController : MonoBehaviour
         float blendTime = (-(seconds * seconds) / 1866240000) + (seconds / 21600);
         skyboxMaterial.SetFloat("_BlendCubemaps", blendTime);
 
+        // Rotate skybox
+        skyboxMaterial.SetFloat("_Rotation", (seconds / 90060) * 360);
+
         // Blend fog color
         RenderSettings.fogColor = Color.Lerp(fogNightColor, fogDayColor, blendTime);
     }
@@ -97,7 +129,15 @@ public class GameplayController : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         gameManager.StartGame(this);
 
+        // Default value
+        minPatientLevelDrop = 0;
+        maxPatientLevelDrop = 0;
+
         score = 0;
+
+        penaltyCount = 0;
+        tryToPauseOnce = false;
+
         scoreText.text = score.ToString();
         upgradeBalance.text = $"Score: {score.ToString()}";
         allowToChoose = false;
@@ -115,13 +155,35 @@ public class GameplayController : MonoBehaviour
 
         audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
 
-        Debug.Log(audioManager.sfxAlarm);
+        UpdateBGMAudio();
     }
 
     private void UpdateScoreUI()
     {
         scoreText.text = score.ToString();
         upgradeBalance.text = $"Score: {score.ToString()}";
+    }
+
+    private void AdjustDifficulty()
+    {
+        // Game difficulty curved
+        // For every 20 score
+        if ((overallScore % 20) == 0 && maxPatientLevelDrop != 5)
+        {
+            GameConfiguration.maxPatientLevel -= 5;
+            maxPatientLevelDrop++;
+        }
+
+        if ((overallScore % 40) == 0 && minPatientLevelDrop != 5)
+        {
+            GameConfiguration.minPatientLevel -= 5;
+            minPatientLevelDrop++;
+        }
+    }
+
+    public void UpdateBGMAudio()
+    {
+        audioManager.PlayBgmGamePlay();
     }
 
     public void SpawnCharacter()
@@ -131,14 +193,21 @@ public class GameplayController : MonoBehaviour
 
     public void AddScore()
     {
+        overallScore = overallScore + (1 * GameConfiguration.scoreMultiplier);
         score = score + (1 * GameConfiguration.scoreMultiplier);
         UpdateScoreUI();
+        AdjustDifficulty();
     }
 
-    public void RemoveScore()
+    public bool RemoveScore(int value)
     {
-        score--;
+        if (score < value)
+            return false;
+
+        score = score - value;
+
         UpdateScoreUI();
+        return true;
     }
 
     public void SetInfo(GameObject character)
@@ -180,6 +249,7 @@ public class GameplayController : MonoBehaviour
 
     public void CheckInfo(bool userDecision)
     {
+        // False if failed to meet the requirements
         bool status = ApprovalSystem.checkFor(characterInfo, clockSystem.GetCurrentDateTime(), nameComputer.data_realName);
 
         switch (userDecision)
@@ -187,9 +257,11 @@ public class GameplayController : MonoBehaviour
             case true:
                 characterLogic.AllowedToEntry(true);
                 nameComputer.ResetRealData();
-                if (status)
+                if (!status)
                 {
                     Debug.Log("WRONG DECISION");
+                    CheckPenalty();
+                    penaltyCount++;
                     return;
                 }
                 break;
@@ -197,9 +269,11 @@ public class GameplayController : MonoBehaviour
             case false:
                 characterLogic.AllowedToEntry(false);
                 nameComputer.ResetRealData();
-                if (!status)
+                if (status)
                 {
                     Debug.Log("WRONG DECISION");
+                    CheckPenalty();
+                    penaltyCount++;
                     return;
                 }
                 break;
@@ -208,5 +282,48 @@ public class GameplayController : MonoBehaviour
         // Add score
         Debug.Log("CORRECT DECISION");
         AddScore();
+    }
+
+    public void PauseGame()
+    {
+        if (!tryToPauseOnce)
+        {
+            tryToPauseOnce = true;
+            pauseText.SetText(PAUSE_WARNING);
+            
+            return;
+        }
+
+        CheckPenalty();
+        penaltyCount++;
+    }
+
+    private void CheckPenalty()
+    {
+        switch (penaltyCount)
+        {
+            case 0:
+                notificationStrikeOne.SetText(ONE_STRIKE);
+                break;
+
+            case 1:
+                notificationStrikeTwo.SetText(TWO_STRIKE);
+                break;
+
+            case 2:
+                notificationStrikeThree.SetText(THREE_STRIKE);
+                break;
+
+            case 3:
+                // Game over
+                GameOver();
+                break;
+
+        }
+    }
+
+    private void GameOver()
+    {
+        gameManager.EndGame(score);
     }
 }

@@ -26,7 +26,6 @@ public class Data
 
     public Data(int key, InfoRandomizer.DB_Male dbMale, InfoRandomizer.DB_Female dbFemale)
     {
-        GameConfiguration.Initialize();
         infoRandomizer = new InfoRandomizer(dbMale, dbFemale);
 
         cardID = $"{infoRandomizer.GetRandomizeCardID(GameConfiguration.minCardID, GameConfiguration.maxCardID)}{key}";

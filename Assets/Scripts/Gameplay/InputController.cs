@@ -55,6 +55,11 @@ public class InputController : MonoBehaviour
                     break;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameplayController.PauseGame();
+        }
     }
 
     private void Approve()
