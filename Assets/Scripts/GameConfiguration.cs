@@ -22,6 +22,18 @@ public static class GameConfiguration
 
     public static int maxPatientLevel { get; set; }
 
+    public static int searchLevel { get; set; }
+
+    public static int decorationLevel { get; set; }
+
+    public static int scoreLevel { get; set; }
+
+    public static int musicLevel { get; set; }
+
+    public static int databaseSearchTime { get; set; }
+
+    public static int scoreMultiplier { get; set; }
+
     /// <summary>
     /// Main game configuration
     /// </summary>
@@ -42,6 +54,14 @@ public static class GameConfiguration
         // Patient Level in seconds
         minPatientLevel = 30;
         maxPatientLevel = 60;
+        databaseSearchTime = 20;
+
+        // Upgrade perks
+        searchLevel = 1;
+        decorationLevel = 1;
+        scoreLevel = 1;
+        scoreMultiplier = 1;
+        musicLevel = 1;
     }
 
     public static void ResetToDefault() { }

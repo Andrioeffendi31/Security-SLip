@@ -19,6 +19,9 @@ public class GameplayController : MonoBehaviour
 
     [SerializeField]
     private Text scoreText;
+    
+    [SerializeField]
+    private Text upgradeBalance;
 
     [SerializeField]
     private ClockSystem clockSystem;
@@ -96,6 +99,7 @@ public class GameplayController : MonoBehaviour
 
         score = 0;
         scoreText.text = score.ToString();
+        upgradeBalance.text = $"Score: {score.ToString()}";
         allowToChoose = false;
         
         // Set Game Time and start the clock
@@ -114,9 +118,10 @@ public class GameplayController : MonoBehaviour
         Debug.Log(audioManager.sfxAlarm);
     }
 
-    private void UpdateProgressBar()
+    private void UpdateScoreUI()
     {
         scoreText.text = score.ToString();
+        upgradeBalance.text = $"Score: {score.ToString()}";
     }
 
     public void SpawnCharacter()
@@ -126,14 +131,14 @@ public class GameplayController : MonoBehaviour
 
     public void AddScore()
     {
-        score++;
-        UpdateProgressBar();
+        score = score + (1 * GameConfiguration.scoreMultiplier);
+        UpdateScoreUI();
     }
 
     public void RemoveScore()
     {
         score--;
-        UpdateProgressBar();
+        UpdateScoreUI();
     }
 
     public void SetInfo(GameObject character)
