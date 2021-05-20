@@ -79,9 +79,9 @@ public class NameComputer : MonoBehaviour
     {
         Debug.Log("Courotine Start");
 
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(GameConfiguration.databaseSearchTime);
 
-        pending.gameObject.SetActive (false);
+        pending.gameObject.SetActive(false);
         SearchDone(searchForName);
         Debug.Log("Courotine Done");
     }
