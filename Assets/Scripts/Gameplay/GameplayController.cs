@@ -109,6 +109,9 @@ public class GameplayController : MonoBehaviour
         float blendTime = (-(seconds * seconds) / 1866240000) + (seconds / 21600);
         skyboxMaterial.SetFloat("_BlendCubemaps", blendTime);
 
+        // Rotate skybox
+        skyboxMaterial.SetFloat("_Rotation", (seconds / 90060) * 360);
+
         // Blend fog color
         RenderSettings.fogColor = Color.Lerp(fogNightColor, fogDayColor, blendTime);
     }
