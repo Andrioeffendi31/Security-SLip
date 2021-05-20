@@ -29,6 +29,13 @@ public class UpgradeTooltip : MonoBehaviour
         text.text = $"Cost: {price} Score";
     }
 
+    public void ShowTooltip()
+    {
+        isShowing = true;
+        gameObject.SetActive(true);
+        text.text = $"Max Level!";
+    }
+
     public void HideTooltip()
     {
         isShowing = false;

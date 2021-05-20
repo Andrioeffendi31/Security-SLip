@@ -74,6 +74,10 @@ public class UpgradeManager : MonoBehaviour
             case 4:
                 price = 100;
                 break;
+
+            case 5:
+                tooltip.ShowTooltip();
+                return;
         }
 
         tooltip.ShowTooltip(price);
@@ -103,6 +107,10 @@ public class UpgradeManager : MonoBehaviour
             case 4:
                 price = 75;
                 break;
+
+            case 5:
+                tooltip.ShowTooltip();
+                return;
         }
 
         tooltip.ShowTooltip(price);
@@ -132,6 +140,10 @@ public class UpgradeManager : MonoBehaviour
             case 4:
                 price = 100;
                 break;
+
+            case 5:
+                tooltip.ShowTooltip();
+                return;
         }
 
         tooltip.ShowTooltip(price);
@@ -161,6 +173,10 @@ public class UpgradeManager : MonoBehaviour
             case 4:
                 price = 100;
                 break;
+
+            case 5:
+                tooltip.ShowTooltip();
+                return;
         }
 
         tooltip.ShowTooltip(price);

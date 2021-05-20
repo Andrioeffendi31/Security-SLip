@@ -2,14 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ScoreMenu : MonoBehaviour
 {
-    public void Retry()
+    [SerializeField]
+    private Text score;
+
+    private GameObject gameManager;
+
+    private GameObject audioManager;
+
+    void Start()
     {
-        //SceneManager.LoadScene(0);
+        gameManager = GameObject.Find("Game Manager");
+        audioManager = GameObject.Find("Audio Manager");
+
+        score.text = gameManager.GetComponent<GameManager>().finalScore.ToString();
+        audioManager.GetComponent<AudioManager>().PlayBgmFinal();
+        audioManager.GetComponent<AudioManager>().audioSourceSFX.Stop();
     }
-    public void GoToMainMenu(){
-        //SceneManager.LoadScene(0);
+
+    public void GoToMainMenu()
+    {
+        Destroy(gameManager);
+        Destroy(audioManager);
+
+        SceneManager.LoadScene("MainMenu");
     }
 }

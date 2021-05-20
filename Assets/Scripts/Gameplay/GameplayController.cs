@@ -41,10 +41,16 @@ public class GameplayController : MonoBehaviour
     private Material skyboxMaterial;
 
     [SerializeField]
-    private Animator notificationAnimController;
+    private TextTypeWrite pauseText;
 
     [SerializeField]
-    private TextTypeWrite textTypeWrite;
+    private TextTypeWrite notificationStrikeOne;
+
+    [SerializeField]
+    private TextTypeWrite notificationStrikeTwo;
+
+    [SerializeField]
+    private TextTypeWrite notificationStrikeThree;
 
     private Color fogDayColor;
 
@@ -276,18 +282,13 @@ public class GameplayController : MonoBehaviour
         if (!tryToPauseOnce)
         {
             tryToPauseOnce = true;
-
-            textTypeWrite.SetText(PAUSE_WARNING);
-
-            textTypeWrite.ShowText();
-
-            // Show notification that the game cannot be paused
-            //notificationAnimController.SetTrigger("NotificationTrigger");
+            pauseText.SetText(PAUSE_WARNING);
             
             return;
         }
 
         CheckPenalty();
+        penaltyCount++;
     }
 
     private void CheckPenalty()
@@ -295,21 +296,28 @@ public class GameplayController : MonoBehaviour
         switch (penaltyCount)
         {
             case 0:
-
+                notificationStrikeOne.SetText(ONE_STRIKE);
                 break;
 
             case 1:
-
+                notificationStrikeTwo.SetText(TWO_STRIKE);
                 break;
 
             case 2:
-
+                notificationStrikeThree.SetText(THREE_STRIKE);
                 break;
 
             case 3:
                 // Game over
+                GameOver();
                 break;
 
         }
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("GAME OVER");
+        gameManager.EndGame(score);
     }
 }

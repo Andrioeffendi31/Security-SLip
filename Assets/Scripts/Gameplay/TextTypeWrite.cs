@@ -5,20 +5,28 @@ using UnityEngine.UI;
 
 public class TextTypeWrite : MonoBehaviour
 {
+    private readonly int NOTIFICATION_TIME = 2;
+
     [SerializeField]
 	Text textToPrint;
+
+    [SerializeField]
+    private Animator notificationAnimController;
 
 	string text;
     
     public void SetText(string text)
     {
+        gameObject.SetActive(true);
         this.text = text;
+        notificationAnimController.SetTrigger("NotificationTrigger");
     }
 
     public void ShowText()
     {
 		textToPrint.text = "";
 
+        StopAllCoroutines();
 		StartCoroutine("PrintText");
     }
 
@@ -26,7 +34,13 @@ public class TextTypeWrite : MonoBehaviour
     {
         text = textToPrint.text;
 
+        StopAllCoroutines();
 		StartCoroutine("DeleteText");
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 
 	IEnumerator PrintText()
@@ -34,21 +48,24 @@ public class TextTypeWrite : MonoBehaviour
 		foreach (char c in text) 
 		{
 			textToPrint.text += c;
-			yield return new WaitForSeconds (0.05f);
+			yield return new WaitForSeconds(0.025f);
 		}
+
+        yield return new WaitForSeconds(NOTIFICATION_TIME);
+        notificationAnimController.SetTrigger("NotificationTrigger");
 	}
 
     IEnumerator DeleteText()
 	{
-        int i = text.Length;
+        string fullText = textToPrint.text;
+        int i = fullText.Length;
 
 		foreach (char c in text) 
 		{
-            string fullText = textToPrint.text;
-            fullText.Remove(i);
-			textToPrint.text = fullText;
             i--;
-			yield return new WaitForSeconds (0.05f);
+            fullText = fullText.Remove(i);
+			textToPrint.text = fullText;
+			yield return new WaitForSeconds(0.0025f);
 		}
 	}
 }

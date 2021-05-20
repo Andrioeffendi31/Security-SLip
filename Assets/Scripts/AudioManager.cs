@@ -50,6 +50,7 @@ public class AudioManager : MonoBehaviour
         audioSourceBGM.Stop();
         audioSourceBGM.clip = BGM_Menu;
         audioSourceBGM.Play();
+        audioSourceBGM.loop = true;
     }
 
     public void PlayBgmGamePlay()
@@ -57,10 +58,12 @@ public class AudioManager : MonoBehaviour
         audioSourceBGM.clip = BGM_Gameplay[GameConfiguration.musicLevel];
         audioSourceBGM.Stop();
         audioSourceBGM.Play();
+        audioSourceBGM.loop = true;
     }
 
     public void PlayBgmFinal()
     {
+        audioSourceBGM.loop = false;
         audioSourceBGM.Stop();
         audioSourceBGM.clip = BGM_Final;
         audioSourceBGM.Play();
@@ -78,6 +81,7 @@ public class AudioManager : MonoBehaviour
         audioSourceBGM.clip = sfxDoor;
         audioSourceBGM.Play();
     }
+
     public void PlaySfxAlarm()
     {
         audioSourceBGM.clip = sfxAlarm;
