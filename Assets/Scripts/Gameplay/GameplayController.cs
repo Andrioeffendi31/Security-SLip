@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class GameplayController : MonoBehaviour
 {
+    private readonly string PAUSE_WARNING = "What do you think you are doing?! Keep WORKING!!!";
+    private readonly string ONE_STRIKE = "I'm warning you! (1 Strikes)";
+    private readonly string TWO_STRIKE = "Are you challenging me!? (2 Strikes)";
+    private readonly string THREE_STRIKE = "1 More mistake and you D.E.A.D!";
+
     private readonly InfoRandomizer infoRandomizer = new InfoRandomizer();
 
     [SerializeField]
@@ -34,6 +39,12 @@ public class GameplayController : MonoBehaviour
 
     [SerializeField]
     private Material skyboxMaterial;
+
+    [SerializeField]
+    private Animator notificationAnimController;
+
+    [SerializeField]
+    private TextTypeWrite textTypeWrite;
 
     private Color fogDayColor;
 
@@ -266,7 +277,12 @@ public class GameplayController : MonoBehaviour
         {
             tryToPauseOnce = true;
 
+            textTypeWrite.SetText(PAUSE_WARNING);
+
+            textTypeWrite.ShowText();
+
             // Show notification that the game cannot be paused
+            //notificationAnimController.SetTrigger("NotificationTrigger");
             
             return;
         }
@@ -279,7 +295,7 @@ public class GameplayController : MonoBehaviour
         switch (penaltyCount)
         {
             case 0:
-                
+
                 break;
 
             case 1:
