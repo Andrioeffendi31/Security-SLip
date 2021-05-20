@@ -133,7 +133,7 @@ public class GameplayController : MonoBehaviour
         minPatientLevelDrop = 0;
         maxPatientLevelDrop = 0;
 
-        score = 300;
+        score = 0;
 
         penaltyCount = 0;
         tryToPauseOnce = false;
