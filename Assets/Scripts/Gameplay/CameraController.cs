@@ -58,12 +58,14 @@ public class CameraController : MonoBehaviour
     public void EnableCameraMovement()
     {
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         allowMovement = true;
     }
 
     public void DisableCameraMovement()
     {
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         allowMovement = false;
     }
 }

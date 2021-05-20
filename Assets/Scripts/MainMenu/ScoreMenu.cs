@@ -21,6 +21,9 @@ public class ScoreMenu : MonoBehaviour
         score.text = gameManager.GetComponent<GameManager>().finalScore.ToString();
         audioManager.GetComponent<AudioManager>().PlayBgmFinal();
         audioManager.GetComponent<AudioManager>().audioSourceSFX.Stop();
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void GoToMainMenu()

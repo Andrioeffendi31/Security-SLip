@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         isPlaying = false;
-        Cursor.lockState = CursorLockMode.Confined;
 
         finalScore = 0;
     }
