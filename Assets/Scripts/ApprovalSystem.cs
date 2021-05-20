@@ -7,10 +7,14 @@ public class ApprovalSystem
     public bool checkFor(Character character, DateTime current, string database)
     {
         if (isExpired(current, character.GetCardExpiredDateTime()))
+        {
             return false;
+        }
 
-        if (inDatabase(character.GetFullName(), database))
+        if (!inDatabase(character.GetFullName(), database))
+        {
             return false;
+        }   
 
         return true;
     }
@@ -25,7 +29,7 @@ public class ApprovalSystem
 
     public bool isExpired(DateTime current, DateTime check) 
     {
-        if (check.Date >= current.Date.Date) { return false; }
+        if (check.Date > current.Date) { return false; }
         return true;
     }
 }

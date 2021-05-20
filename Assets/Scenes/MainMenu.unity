@@ -866,11 +866,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGM_Menu: {fileID: 8300000, guid: dfa9daab35e49284790931aab1a1463d, type: 3}
-  BGM_Gameplay: {fileID: 8300000, guid: e172eb9d267c8c74a913bcee7a17d904, type: 3}
   BGM_Final: {fileID: 8300000, guid: 6d5c182bbf8ade14e9c01fcd0cf62b29, type: 3}
   sfxDoor: {fileID: 8300000, guid: 1fe827c8b7fe1864b9f014b6fb83a09e, type: 3}
   sfxClock: {fileID: 8300000, guid: b49e0482863931c489e699d19b317388, type: 3}
   sfxAlarm: {fileID: 8300000, guid: 466d91e8b6952614198df41417f375ab, type: 3}
+  BGM_Gameplay:
+  - {fileID: 8300000, guid: e172eb9d267c8c74a913bcee7a17d904, type: 3}
+  - {fileID: 8300000, guid: dfa9daab35e49284790931aab1a1463d, type: 3}
+  - {fileID: 8300000, guid: 8c20641a8980e394eb013d48e53ba81a, type: 3}
+  - {fileID: 8300000, guid: 31bec85b31fba3645a5214fc6265e125, type: 3}
+  - {fileID: 8300000, guid: eea8b05e58f794544ab277ab25bf52bf, type: 3}
+  - {fileID: 8300000, guid: 8bd12c170a7ab3e4ca37230e4517c63c, type: 3}
   audioSourceBGM: {fileID: 1748680621}
   audioSourceSFX: {fileID: 944250653}
   masterMixer: {fileID: 0}
@@ -2968,11 +2974,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7944096964491392899, guid: 685b931408943e94a9d30f715275754f, type: 2}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: dfa9daab35e49284790931aab1a1463d, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

@@ -53,6 +53,18 @@ public class GameplayController : MonoBehaviour
 
     private int score;
 
+    private int overallScore;
+
+    private int minPatientLevelDrop;
+
+    private int maxPatientLevelDrop;
+
+    private int penaltyCount;
+
+    private bool statusNotificationBubble;
+
+    private bool tryToPauseOnce;
+
     private void Start()
     {
         Init();
@@ -97,7 +109,15 @@ public class GameplayController : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         gameManager.StartGame(this);
 
-        score = 0;
+        // Default value
+        minPatientLevelDrop = 0;
+        maxPatientLevelDrop = 0;
+
+        score = 300;
+
+        penaltyCount = 0;
+        tryToPauseOnce = false;
+
         scoreText.text = score.ToString();
         upgradeBalance.text = $"Score: {score.ToString()}";
         allowToChoose = false;
@@ -115,13 +135,35 @@ public class GameplayController : MonoBehaviour
 
         audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
 
-        Debug.Log(audioManager.sfxAlarm);
+        UpdateBGMAudio();
     }
 
     private void UpdateScoreUI()
     {
         scoreText.text = score.ToString();
         upgradeBalance.text = $"Score: {score.ToString()}";
+    }
+
+    private void AdjustDifficulty()
+    {
+        // Game difficulty curved
+        // For every 20 score
+        if ((overallScore % 20) == 0 && maxPatientLevelDrop != 5)
+        {
+            GameConfiguration.maxPatientLevel -= 5;
+            maxPatientLevelDrop++;
+        }
+
+        if ((overallScore % 40) == 0 && minPatientLevelDrop != 5)
+        {
+            GameConfiguration.minPatientLevel -= 5;
+            minPatientLevelDrop++;
+        }
+    }
+
+    public void UpdateBGMAudio()
+    {
+        audioManager.PlayBgmGamePlay();
     }
 
     public void SpawnCharacter()
@@ -131,14 +173,21 @@ public class GameplayController : MonoBehaviour
 
     public void AddScore()
     {
+        overallScore = overallScore + (1 * GameConfiguration.scoreMultiplier);
         score = score + (1 * GameConfiguration.scoreMultiplier);
         UpdateScoreUI();
+        AdjustDifficulty();
     }
 
-    public void RemoveScore()
+    public bool RemoveScore(int value)
     {
-        score--;
+        if (score < value)
+            return false;
+
+        score = score - value;
+
         UpdateScoreUI();
+        return true;
     }
 
     public void SetInfo(GameObject character)
@@ -180,6 +229,7 @@ public class GameplayController : MonoBehaviour
 
     public void CheckInfo(bool userDecision)
     {
+        // False if failed to meet the requirements
         bool status = ApprovalSystem.checkFor(characterInfo, clockSystem.GetCurrentDateTime(), nameComputer.data_realName);
 
         switch (userDecision)
@@ -187,7 +237,7 @@ public class GameplayController : MonoBehaviour
             case true:
                 characterLogic.AllowedToEntry(true);
                 nameComputer.ResetRealData();
-                if (status)
+                if (!status)
                 {
                     Debug.Log("WRONG DECISION");
                     return;
@@ -197,7 +247,7 @@ public class GameplayController : MonoBehaviour
             case false:
                 characterLogic.AllowedToEntry(false);
                 nameComputer.ResetRealData();
-                if (!status)
+                if (status)
                 {
                     Debug.Log("WRONG DECISION");
                     return;
@@ -208,5 +258,42 @@ public class GameplayController : MonoBehaviour
         // Add score
         Debug.Log("CORRECT DECISION");
         AddScore();
+    }
+
+    public void PauseGame()
+    {
+        if (!tryToPauseOnce)
+        {
+            tryToPauseOnce = true;
+
+            // Show notification that the game cannot be paused
+            
+            return;
+        }
+
+        CheckPenalty();
+    }
+
+    private void CheckPenalty()
+    {
+        switch (penaltyCount)
+        {
+            case 0:
+                
+                break;
+
+            case 1:
+
+                break;
+
+            case 2:
+
+                break;
+
+            case 3:
+                // Game over
+                break;
+
+        }
     }
 }

@@ -8,11 +8,13 @@ using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     public AudioClip BGM_Menu,
-                     BGM_Gameplay,
                      BGM_Final,
                      sfxDoor,
                      sfxClock,
                      sfxAlarm;
+
+    [SerializeField]
+    public AudioClip[] BGM_Gameplay;
 
     public AudioSource audioSourceBGM,
                        audioSourceSFX;
@@ -40,22 +42,26 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(this);
+        PlayBgmMenu();
     }
 
     public void PlayBgmMenu()
     {
+        audioSourceBGM.Stop();
         audioSourceBGM.clip = BGM_Menu;
         audioSourceBGM.Play();
     }
 
     public void PlayBgmGamePlay()
     {
-        audioSourceBGM.clip = BGM_Gameplay;
+        audioSourceBGM.clip = BGM_Gameplay[GameConfiguration.musicLevel];
+        audioSourceBGM.Stop();
         audioSourceBGM.Play();
     }
 
     public void PlayBgmFinal()
     {
+        audioSourceBGM.Stop();
         audioSourceBGM.clip = BGM_Final;
         audioSourceBGM.Play();
     }
