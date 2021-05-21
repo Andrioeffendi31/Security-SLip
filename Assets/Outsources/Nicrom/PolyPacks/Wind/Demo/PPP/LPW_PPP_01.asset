@@ -198,7 +198,7 @@ MonoBehaviour:
     value: 1
   mode:
     overrideState: 1
-    value: 1
+    value: 0
   intensity:
     overrideState: 1
     value: 0.6
@@ -224,7 +224,7 @@ MonoBehaviour:
     overrideState: 1
     value: 0
   radius:
-    overrideState: 1
+    overrideState: 0
     value: 3.08
   quality:
     overrideState: 1
