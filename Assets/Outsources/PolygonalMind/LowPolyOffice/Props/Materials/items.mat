@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: items
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: OUTLINE_BLENDING TCP2_OUTLINE_TEXTURED TCP2_ZSMOOTH_ON
+  m_Shader: {fileID: 4800000, guid: 128c5f1edaefa4c4fb3f9f7a4615edb2, type: 3}
+  m_ShaderKeywords: OUTLINE_BLENDING TCP2_OUTLINE_TEXTURED TCP2_ZSMOOTH_ON _SEGMENTED_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -84,7 +84,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AmbientCol: 1
     - _BumpScale: 1
+    - _Clipped: 0
+    - _ColBright: 0
+    - _ColIntense: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -93,22 +97,34 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _Lumin: 0
+    - _MaxLight: 1
     - _Metallic: 0.577
+    - _MinLight: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _Offset: 0
     - _Offset1: 0
     - _Offset2: 0
+    - _OtlWidth: 1.35
     - _Outline: 2
     - _OutlineMode: 0
     - _Parallax: 0.02
     - _RampSmooth: 0.1
     - _RampThreshold: 0.5
+    - _Segmented: 1
     - _Shadow: 0.4
+    - _ShnIntense: 1
+    - _ShnOverlap: 0
+    - _ShnRange: 0.15
+    - _ShnSmooth: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularPower: 20
     - _SrcBlend: 1
     - _SrcBlendOutline: 5
+    - _Steps: 3
+    - _StpSmooth: 0
     - _TexLod: 0
     - _UVSec: 0
     - _ZSmooth: -3
@@ -119,8 +135,10 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 0.785, g: 0.785, b: 0.785, a: 1}
+    - _OtlColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _SColor: {r: 0.195, g: 0.195, b: 0.195, a: 1}
     - _ShadowColor: {r: 0.7794118, g: 0.7794118, b: 0.7794118, a: 1}
+    - _ShnColor: {r: 1, g: 1, b: 1, a: 1}
     - _outline_color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_BuildTextureStacks: []
