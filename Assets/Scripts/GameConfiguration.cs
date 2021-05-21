@@ -42,18 +42,20 @@ public static class GameConfiguration
         startCardID = "310771";
         minCardID = 50;
         maxCardID = 1337;
-        generatedRangeCardDate = 5;
+
+        // Game Difficulty
+        generatedRangeCardDate = 3;
 
         DebugMode = true;
         
         // year month day hour minute second
         gameTime = new DateTime(2021, 3, 20, 7, 0, 0);
-        millisecondPerRealMillisecond = 10000;
+        millisecondPerRealMillisecond = 1000;
 
         // Game Difficulty
         // Patient Level in seconds
         minPatientLevel = 30;
-        maxPatientLevel = 60;
+        maxPatientLevel = 50;
         databaseSearchTime = 20;
 
         // Upgrade perks

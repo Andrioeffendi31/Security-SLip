@@ -9,7 +9,7 @@ public class GameplayController : MonoBehaviour
     private readonly string PAUSE_WARNING = "What do you think you are doing?! Keep WORKING!!!";
     private readonly string ONE_STRIKE = "I'm warning you! (1 Strikes)";
     private readonly string TWO_STRIKE = "Are you challenging me!? (2 Strikes)";
-    private readonly string THREE_STRIKE = "1 More mistake and you D.E.A.D!";
+    private readonly string THREE_STRIKE = "1 More mistake and your D.E.A.D!";
 
     private readonly InfoRandomizer infoRandomizer = new InfoRandomizer();
 
@@ -92,9 +92,16 @@ public class GameplayController : MonoBehaviour
         // Light system
         LightDirection();
 
+        GameClock();
+
         // // Game Over
         // if (clockSystem.GetCurrentDateTime().Hour >= 8)
         //     gameManager.GoToMainMenu();
+    }
+
+    private void GameClock()
+    {
+        GameConfiguration.gameTime = clockSystem.GetCurrentDateTime();
     }
 
     private void LightDirection()

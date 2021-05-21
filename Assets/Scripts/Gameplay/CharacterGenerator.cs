@@ -101,7 +101,7 @@ public class CharacterGenerator : MonoBehaviour
         DateTime dateTimeTo = GameConfiguration.gameTime.AddDays(GameConfiguration.generatedRangeCardDate);
 
         // HARDCODED CREATED CARD DATE TIME
-        DateTime dateCreated = GameConfiguration.gameTime.AddDays(-5);
+        DateTime dateCreated = GameConfiguration.gameTime.AddDays(-3);
         DateTime dateExpired = infoRandomizer.GetRandomDate(dateTimeFrom, dateTimeTo);
 
         return new Card(firstName, middleName, lastName, genderType, cardID, dateCreated, dateExpired);
