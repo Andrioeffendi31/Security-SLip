@@ -96,6 +96,11 @@ public class MainMenuBtn : MonoBehaviour
         }
     }
 
+    public void GoToCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
     public void ExitGame()
     {
         Application.Quit();
