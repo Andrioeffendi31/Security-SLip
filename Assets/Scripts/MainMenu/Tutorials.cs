@@ -9,4 +9,12 @@ public class Tutorials : MonoBehaviour
     {
         SceneManager.LoadScene("Gameplay");
     }
+
+    public void BackToMenu()
+    {
+        Destroy(GameObject.Find("Game Manager"));
+        Destroy(GameObject.Find("Audio Manager"));
+
+        SceneManager.LoadScene("MainMenu");
+    }
 }
