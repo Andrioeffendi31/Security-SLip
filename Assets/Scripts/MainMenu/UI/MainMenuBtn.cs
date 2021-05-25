@@ -55,14 +55,13 @@ public class MainMenuBtn : MonoBehaviour
         
         playTimes = PlayerPrefs.GetInt("PlayTimes");
 
-        PlayerPrefs.SetInt("PlayTimes", playTimes + 1);
-
         if (playTimes > 3)
         {
             SceneManager.LoadScene("Gameplay");
         }
         else
         {
+            PlayerPrefs.SetInt("PlayTimes", playTimes + 1);
             SceneManager.LoadScene("Tutorial");
         }
         
