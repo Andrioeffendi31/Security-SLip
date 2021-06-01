@@ -186,6 +186,7 @@ public class CharacterLogic : MonoBehaviour
         if (currentPatientLevel == 0)
         {
             AllowedToEntry(false);
+            gameplayController.AddPenalty();
         }
     }
 
