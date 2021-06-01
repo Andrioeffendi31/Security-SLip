@@ -305,6 +305,12 @@ public class GameplayController : MonoBehaviour
         penaltyCount++;
     }
 
+    public void AddPenalty()
+    {
+        CheckPenalty();
+        penaltyCount++;
+    }
+
     private void CheckPenalty()
     {
         switch (penaltyCount)
