@@ -29,7 +29,7 @@ public class ApprovalSystem
 
     public bool isExpired(DateTime current, DateTime check) 
     {
-        if (check.Date > current.Date) { return false; }
+        if (check.Date.Day >= current.Date.Day) { return false; }
         return true;
     }
 }

@@ -243,8 +243,7 @@ public class GameplayController : MonoBehaviour
         // Randomize if the character data should inject to database
         if (infoRandomizer.ShouldInjectToDatabase())
         {
-            nameComputer.data_realID = characterInfo.GetCardID();
-            nameComputer.data_realName = characterInfo.GetFullName();
+            nameComputer.InjectData(characterInfo);
             Debug.Log("INJECTED TO DATABASE");
         }      
     }

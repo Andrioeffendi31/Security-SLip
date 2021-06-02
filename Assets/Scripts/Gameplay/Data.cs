@@ -33,4 +33,16 @@ public class Data
         middleName = infoRandomizer.GetRandomizeMiddleName(infoRandomizer.GetRandomizeGender());
         lastName = infoRandomizer.GetRandomizeLastName(infoRandomizer.GetRandomizeGender());
     }
+
+    public string GetFullName()
+    {
+        string fullName;
+        fullName = $"{firstName} {middleName} {lastName}";
+        return fullName;
+    }
+
+    public string GetCardID()
+    {
+        return cardID;
+    }
 }
