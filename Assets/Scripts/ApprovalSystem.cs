@@ -11,10 +11,10 @@ public class ApprovalSystem
             return false;
         }
 
-        // if (!inDatabase(character.GetFullName(), database))
-        // {
-        //     return false;
-        // }   
+        if (!inDatabase(character.GetFullName(), database))
+        {
+            return false;
+        }   
 
         return true;
     }

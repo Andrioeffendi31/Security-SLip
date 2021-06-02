@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private float XMinRotation = -45f;
+    private float XMinRotation = -65f;
     private float XMaxRotation = 45f;
     private float YMinRotation = -75f;
-    private float YMaxRotation = 90f;
+    private float YMaxRotation = 110f;
 
     [SerializeField]
     private Camera cam;
@@ -19,6 +19,9 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     [Range(1.0f, 10.0f)]
     private float YSensitivity;
+
+    [SerializeField]
+    private GameObject chair;
 
     private float rotAroundX, rotAroundY;
     private bool allowMovement;
@@ -52,6 +55,7 @@ public class CameraController : MonoBehaviour
             rotAroundY = Mathf.Clamp(rotAroundY, YMinRotation, YMaxRotation);
 
             cam.transform.rotation = Quaternion.Euler(-rotAroundX, rotAroundY, 0);
+            chair.transform.rotation = Quaternion.Euler(0, rotAroundY, 0);
         } 
     }
 
