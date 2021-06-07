@@ -1,2 +1,2 @@
 # Security SLip
- Final Project Game Dev 2
+​It's an "security-checkup" based simulation game. 
